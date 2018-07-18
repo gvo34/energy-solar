@@ -5,7 +5,6 @@
 /* remove default margin and padding from body */
 
   
-
 img{
     width:25%;
 }
@@ -48,3 +47,4 @@ html, body
     max-width:60em;
     padding: 0.2em;
 }
+
