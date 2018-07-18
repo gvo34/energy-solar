@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <title>Energy Solar Forecasting Model</title>
+        
+        <!-- Bootstrap -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+        <!-- Leaflet CSS & JS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+        <!-- Our CSS -->   
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    </head>
+    <body>
+    <div class="container-fluid">   
+        <div class=row>
+            <div class="col-md-12">
+            <div class="jumbotron">
+                    <h2>A forecast of energy consumption, insight into Solar</h2>
+                    <p> A time series model prediction using Auto Regression</p>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6">
+                <p>
+                        <h4>Select data to load into the model</h4>
+                        <form method=post enctype=multipart/form-data>
+                          <p><input type=file name=file>
+                             <input type=submit value=Upload>
+                        </form>
+                </p>
+            <hr>    
+            <p>
+                    Let's have a look at solar energy consumption
+                    Motivation: Interested in energy source and consumption. Motivated by the rise in alternative energy source:
+                    <ul>
+                    <li>Solar</li>
+                    <li>Wind</li>
+                    </ul>
+                    Energy consumption is distributed across: 
+                    <ul>
+                    <li>Residential</li>
+                    <li>Commercial</li>
+                    <li>Industrial</li>
+                    </ul>
+            </p>
+        </div>    
+        <div class="col-md-6">
+            <div id="map-holder">
+                    <div class="container fill">
+                        <div id="mapit"></div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="jumbotron"> -->
+
+                    <h4>Time serie</h4>        
+                    <img src="{{ url_for('static', filename='images/timeserie.png') }}" alt="">
+                    The input is a time serie from 1984 to date showing energy consumption
+                    <h4>Lag plot</h4>
+                    <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
+                    We do the lag plot to determine if there is a correlation between time t and t-1
+                    <h4>Auto Correlation</h4>
+                    <img src="{{ url_for('static', filename='images/autocorr.png') }}" alt="">
+                    We use autocorrelation capability to plot
+                    <h4>Persistence</h4>
+                    <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt="">
+                    Naive Persistence model will forecast based on what it has seen
+                    <h4>Autoregression</h4>
+                    <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt="">
+                    Improved prediction with autoregresssion model
+                    <h4>Autoregression with training</h4>
+                    <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt="">
+                    Further improved prediction with autoregresssion model with history
+
+
+
+
+
+                    
+                    <div class="panel">
+                            <h5 class="panel-header">Prediction of last submitted image is:</h5>
+                            <div class="panel-body" style="border:solid;align-content:center">
+                                <p id="prediction_text"> 
+                                        {% for predict in predictions.predictions %}
+                                        <li>{{ predict.label }}: {{ predict.probability }}</li>
+                                      {% endfor %}
+                                 </p>
+                            </div>
+                            </div>
+                </div>
+
+            <!-- </div> -->
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    </body>
+    
+</html>
