@@ -40,21 +40,22 @@ def prepare_image(img):
 def upload_file():
     data = {"success": False}
     if request.method == 'POST':
-        print("THIS IS REQUEST")
-        print(request.form)
+        
+        # print("THIS IS REQUEST")
+        # print(request.form)
 
-        if request.files.get('file'):
-            # read the file
-            file = request.files['file']
-            print(file)
-            # read the filename
-            filename = file.filename
-            print(filename)
-            # create a path to the uploads folder
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
+        # if request.files.get('file'):
+        #     # read the file
+        #     file = request.files['file']
+        #     print(file)
+        #     # read the filename
+        #     filename = file.filename
+        #     print(filename)
+        #     # create a path to the uploads folder
+        #     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        #     file.save(filepath)
 
-        print("process file ", filepath)
+        # print("process file ", filepath)
 
         # Load the saved image using Keras and resize it to the Xception
         #format of 299x299 pixels
