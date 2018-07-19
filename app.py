@@ -2,12 +2,12 @@ import os
 import io
 import numpy as np
 
-import keras
-from keras.preprocessing import image
-from keras.preprocessing.image import img_to_array
-from keras.applications.xception import (
-    Xception, preprocess_input, decode_predictions)
-from keras import backend as K
+# import keras
+# from keras.preprocessing import image
+# from keras.preprocessing.image import img_to_array
+# from keras.applications.xception import (
+#     Xception, preprocess_input, decode_predictions)
+# from keras import backend as K
 
 from flask import Flask, request, redirect, url_for, jsonify, render_template
 
@@ -18,22 +18,22 @@ model = None
 graph = None
 
 
-def load_model():
-    global model
-    global graph
-    model = Xception(weights="imagenet")
-    graph = K.get_session().graph
+# def load_model():
+#     global model
+#     global graph
+#     model = Xception(weights="imagenet")
+#     graph = K.get_session().graph
 
 
 #load_model()
 
 
-def prepare_image(img):
-    img = img_to_array(img)
-    img = np.expand_dims(img, axis=0)
-    img = preprocess_input(img)
-    # return the processed image
-    return img
+# def prepare_image(img):
+#     img = img_to_array(img)
+#     img = np.expand_dims(img, axis=0)
+#     img = preprocess_input(img)
+#     # return the processed image
+#     return img
 
 
 @app.route('/', methods=['GET', 'POST'])
