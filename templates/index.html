@@ -47,11 +47,15 @@
             </p>
         </div>    
         </div>
+
+
+<!-- Feautre Exploration -->
+
         <hr>
         <div class="row">
         <div class="col-md-12">
-          <div class=row>
-            <div class="col-md-12">
+          <div class=jumbotron>
+                <h5> Feature Exploration</h5>
                 <p>
                 Our first approach is to create a model for predicting solar energy consumption based on the data itself. Using the Autoregression model.
                 The autoregression model is based if a linear model y = b0 + b1X  where y and x are 2 steps away:
@@ -64,7 +68,7 @@
                         <li>  Seasonality (as determined by the Month)  </li>
                 </ul>
                 </p>
-             </div>
+          
            </div>
            <div class="row">
                 <div class="col-3">
@@ -72,9 +76,6 @@
                                 <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Time serie</a>
                                 <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two" role="tab" aria-controls="v-pills-two" aria-selected="false">Lag Plot</a>
                                 <a class="nav-link" id="v-pills-three-tab" data-toggle="pill" href="#v-pills-three" role="tab" aria-controls="v-pills-three" aria-selected="false">Autocorrelation</a>
-                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
-                                <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
-                                <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/Training</a>
                         </div>
                 </div>
                 <div class="col-9">
@@ -92,6 +93,130 @@
                                         <img src="{{ url_for('static', filename='images/autocorr.png') }}" alt="">
                                         We use autocorrelation capability to plot
                                 </div>
+                                
+                        </div>
+                </div>
+          </div>
+
+
+<!-- Data Pre processing -->
+
+
+<hr>
+<div class="row">
+<div class="col-md-12">
+    <div class="jumbotron">
+        <h5>Dataset evaluation and preprocessing</h5>
+        <p>
+                We further explore selected features from out dataset 
+                <ul>
+                        <li>
+                                Feature Correlation 
+                        </li>
+                        <li>  Normalization</li>
+                        <li> filtered features</li>
+                </ul>
+        </p>
+   </div>
+</div>
+</div>
+         <hr>
+         
+<div class="row">
+   <div class="col-md-12">
+      <div class="row">     
+        <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-onef-tab" data-toggle="pill" href="#v-pills-onef" role="tab" aria-controls="v-pills-onef" aria-selected="true">Correlation</a>
+                        <a class="nav-link" id="v-pills-onef2-tab" data-toggle="pill" href="#v-pills-onef2" role="tab" aria-controls="v-pills-onef2" aria-selected="false">Most Correlated</a>
+                        
+                        <a class="nav-link" id="v-pills-twof-tab" data-toggle="pill" href="#v-pills-twof" role="tab" aria-controls="v-pills-twof" aria-selected="false">Normalization</a>
+                        <a class="nav-link" id="v-pills-twof2-tab" data-toggle="pill" href="#v-pills-twof2" role="tab" aria-controls="v-pills-twof2" aria-selected="false">Box Plot</a>
+
+                        <a class="nav-link" id="v-pills-oner-tab" data-toggle="pill" href="#v-pills-oner" role="tab" aria-controls="v-pills-oner" aria-selected="true">Scaling</a>
+
+                </div>
+        </div>
+        <div class="col-9">
+                <div class="tab-content" id="v-pillsr-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-onef" role="tabpanel" aria-labelledby="v-pills-onef-tab">
+                                <img src="{{ url_for('static', filename='images/overallcorrelationheat.png') }}" alt="">
+                                Overall feature correlation 
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-onef2" role="tabpanel" aria-labelledby="v-pills-onef2-tab">
+                                <img src="{{ url_for('static', filename='images/correlationheat.png') }}" alt="">
+                                Most correlated 
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-twof" role="tabpanel" aria-labelledby="v-pills-twof-tab">
+                                        <img src="{{ url_for('static', filename='images/normalization.png') }}" alt="">
+                                Normalization of selected features
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-twof2" role="tabpanel" aria-labelledby="v-pills-twof2-tab">
+                                <img src="{{ url_for('static', filename='images/boxplotyear.png') }}" alt="">
+                                Box Plot
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-oner" role="tabpanel" aria-labelledby="v-pills-oner-tab">
+                                <img src="{{ url_for('static', filename='images/LR_scaled_features.png') }}" alt="">
+                               Scaled features
+                        </div>
+                </div>
+        </div>
+     </div>    
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Prediction models -->
+
+
+                    <hr>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h5>Prediction models</h5>
+                <p>
+                        We explore ML models as recommended by research
+                        <ul>
+                                <li>
+                                        Linear regression
+                                </li>
+                                <li> Persistence</li>
+                                <li> Autoregression</li>
+                                <li>  Combined method os LR and MLP using Random Forrest</li>
+                        </ul>
+                </p>
+           </div>
+        </div>
+        </div>
+                 <hr>
+                 
+        <div class="row">
+           <div class="col-md-12">
+              <div class="row">     
+                <div class="col-3">
+                        <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">
+        
+                                <a class="nav-link active" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">LR Error</a>
+                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
+                                <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
+                                <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/Training</a>
+                        </div>
+                </div>
+                <div class="col-9">
+                        <div class="tab-content" id="v-pillsr-tabContent">
+                                
+                                <div class="tab-pane fade show active" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">
+                                                <img src="{{ url_for('static', filename='images/LR_residual.png') }}" alt="">
+                                        Linear regression resideal error
+                                </div>
                                 <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
                                         <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt="">
                                         Naive Persistence model will forecast based on what it has seen. Prediction in Red. Actual in Blue.
@@ -106,50 +231,22 @@
                                 </div>
                         </div>
                 </div>
-          </div>
-                    <hr>
-        <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h5>Prediction models</h5>
-                <p>
-                        We explore ML models as recommended by research
-                        <ul>
-                                <li>
-                                        Linear regression
-                                </li>
-                                <li>  Combined method os LR and MLP using Random Forrest</li>
-                        </ul>
-                </p>
-           </div>
-        </div>
-        </div>
-                 <hr>
-                 
-        <div class="row">
-           <div class="col-md-12">
-              <div class="row">     
-                <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-oner-tab" data-toggle="pill" href="#v-pills-oner" role="tab" aria-controls="v-pills-oner" aria-selected="true">LR Scale</a>
-                                <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">LR Error</a>
-                        </div>
-                </div>
-                <div class="col-9">
-                        <div class="tab-content" id="v-pillsr-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-oner" role="tabpanel" aria-labelledby="v-pills-oner-tab">
-                                        <img src="{{ url_for('static', filename='images/LR_scaled_features.png') }}" alt="">
-                                        Linear regression scaled features
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">
-                                                <img src="{{ url_for('static', filename='images/LR_residual.png') }}" alt="">
-                                        Linear regression resideal error
-                                </div>
-                        </div>
-                </div>
              </div>    
            </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
     </div>
