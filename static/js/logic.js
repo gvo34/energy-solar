@@ -16,3 +16,32 @@
 //       access_token,
 //   ).addTo(myMap);
   
+// var history = document.getElementById("#thedropdown");
+// console.log(history);
+
+// var value = history.options[history.selectedIndex].value;
+
+//var value = d3.select("#thedropdown").node().value;
+var init_value = document.getElementById('thedropdown');
+console.log(init_value.options[init_value.selectedIndex].value)
+
+
+function Linear(history){
+    console.log("calling with history ", history)
+    d3.json(`/Linear/${history}`, (error, response) => {
+        if (error) return console.warn(error);
+        
+        // draw gauge based on example table loaded in response
+        console.log("pass the history of ", history)
+      });
+}
+
+function gethistory(live_value){
+
+    newvalue = live_value.options[live_value.selectedIndex].value;
+    console.log("value changed to ",newvalue );
+
+    Linear(newvalue);
+
+}
+
