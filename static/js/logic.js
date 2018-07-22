@@ -6,15 +6,15 @@ console.log(init_value.options[init_value.selectedIndex].value)
 
 function ARHistory(history){
     console.log("calling Autoregression with history ", history)
-    d3.json(`/Autoregression/${history}`, (error, response) => {
+    d3.json(`/ARHistory/${history}`, (error, response) => {
         if (error) return console.warn(error);
         
         // Model score
-        console.log("pass the history of ", history, " Obtained model score of ", response);
+        console.log("ARH with history of ", history, " score of ", response);
         
         // Update prediction score
         var init_score = document.getElementById('prediction_ARH');
-        init_score.innerHTML = response.MSE;
+        init_score.innerHTML = "MSE: "+ response.MSE;
 
         //refresh image NEED THIS TO WORK
         //document.getElementById('ARimg').innerHTML = "static/images/AR_residual.png"
@@ -27,18 +27,16 @@ function Autoregression(history){
         if (error) return console.warn(error);
         
         // Model score
-        console.log("pass the history of ", history, " Obtained model score of ", response);
+        console.log("AR with history of ", history, " score of ", response);
         
         // Update prediction score
         var init_score = document.getElementById('prediction_AR');
-        init_score.innerHTML = response.MSE;
+        init_score.innerHTML = "MSE: " + response.MSE;
 
         //refresh image NEED THIS TO WORK
         //document.getElementById('ARimg').innerHTML = "static/images/AR_residual.png"
       });
 }
-
-
 
 
 function Linear(history){
@@ -47,11 +45,11 @@ function Linear(history){
         if (error) return console.warn(error);
         
         // Model score
-        console.log("pass the history of ", history, " Obtained model score of ", response);
+        console.log("LR with the history of ", history, " score of ", response);
         
         // Update prediction score
         var init_score = document.getElementById('prediction_LR');
-        init_score.innerHTML = response.r2;
+        init_score.innerHTML = "MSE: "+response.MSE + " r2: "+ response.r2;
 
         //refresh image NEED THIS TO WORK
         //document.getElementById('LRimg').innerHTML = "static/images/LR_residual.png"

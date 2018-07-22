@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.ar_model import AR
 from sklearn.preprocessing import StandardScaler
-
+ 
 # import keras
 # from keras.preprocessing import image
 # from keras.preprocessing.image import img_to_array
@@ -18,11 +18,41 @@ from sklearn.preprocessing import StandardScaler
 from flask import Flask, request, redirect, url_for, jsonify, render_template
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'Data'
 
-model = None
-graph = None
+## common routines
+def read_dataset():
+    filename = "X.csv"
+    output_data = "static/data/output" 
+    filepath = os.path.join(output_data,filename)
+    X = pd.read_csv(filepath,index_col=False, header=0)
+    filename = "y.csv"
+    output_data = "static//data/output" 
+    filepath = os.path.join(output_data,filename)
+    y = pd.read_csv(filepath,index_col=False, names=["Value"])
+    return X, y
 
+def read_timeserie():
+    ## Preprocessed time serie from Energy Solar consumption
+    filename = "monthdata.csv"
+    output_data = "static/data/output"
+    filepath = os.path.join(output_data,filename)
+    months = pd.read_csv(filepath,index_col=False, header=0)
+    # convert into real dates, set as index for time series
+    months['dates'] = pd.to_datetime(months["YYYYMM"], format="%Y%m")
+    timeserie = months[['dates','Value']]
+    timeserie = timeserie.set_index('dates')
+    return timeserie    
+
+def split_scale(series, past_look):
+    X = series.values
+    #split
+    train, test = X[1:len(X)-past_look], X[len(X)-past_look:]
+    print("train observations ", len(train), "test observations: ",len(test))
+    # scale
+    X_scaler = StandardScaler().fit(train.reshape(-1, 1))
+    train_scaled = X_scaler.transform(train.reshape(-1, 1))
+    test_scaled = X_scaler.transform(test.reshape(-1, 1))
+    return train_scaled, test_scaled
 
 
 # persistence model
@@ -34,26 +64,12 @@ def model_persistence(x):
 def Autoregression(history):
     print("Autoregression with past lookup of ", history)
     past_lookup = int(history)
-    ## Preprocessed time serie from Energy Solar consumption
-    filename = "monthdata.csv"
-    output_data = "static/data/output"
-    filepath = os.path.join(output_data,filename)
-    months = pd.read_csv(filepath,index_col=False, header=0)
-    # convert into real dates, set as index for time series
-    months['dates'] = pd.to_datetime(months["YYYYMM"], format="%Y%m")
-    timeserie = months[['dates','Value']]
-    timeserie = timeserie.set_index('dates')
-    series = timeserie
+    
+    series = read_timeserie()
  
-    # split dataset
-    X = series.values
-    train, test = X[1:len(X)-past_lookup], X[len(X)-past_lookup:]
-    print("train observations ", len(train), "test observations: ",len(test))
-    # scale
-   
-    X_scaler = StandardScaler().fit(train.reshape(-1, 1))
-    train_scaled = X_scaler.transform(train.reshape(-1, 1))
-    test_scaled = X_scaler.transform(test.reshape(-1, 1))
+    # split and scale dataset
+    train_scaled, test_scaled = split_scale(series, past_lookup)
+    
     # train autoregression
     model = AR(train_scaled)
     model_fit = model.fit()
@@ -66,7 +82,7 @@ def Autoregression(history):
     MSE = mean_squared_error(test_scaled, predictions)
     # plot results
     plt.figure()
-    plt.title("Prediction Plot for history of " + history)
+    plt.title("Autoregression plot of " + history + " months")
     plt.plot(test_scaled)
     plt.plot(predictions, color='red')
     # Save our graph 
@@ -80,26 +96,12 @@ def Autoregression(history):
 def ARHistory(history):
     print("Autoregression History with past lookup of ", history)
     past_lookup = int(history)
-    ## Preprocessed time serie from Energy Solar consumption
-    filename = "monthdata.csv"
-    output_data = "static/data/output"
-    filepath = os.path.join(output_data,filename)
-    months = pd.read_csv(filepath,index_col=False, header=0)
-    # convert into real dates, set as index for time series
-    months['dates'] = pd.to_datetime(months["YYYYMM"], format="%Y%m")
-    timeserie = months[['dates','Value']]
-    timeserie = timeserie.set_index('dates')
-    series = timeserie
-    from statsmodels.tsa.ar_model import AR
-    # split dataset
-    X = series.values
-    train, test = X[1:len(X)-past_lookup], X[len(X)-past_lookup:]
-    print("train observations ", len(train), "test observations: ",len(test))
-    # scale
-    from sklearn.preprocessing import StandardScaler
-    X_scaler = StandardScaler().fit(train.reshape(-1, 1))
-    train_scaled = X_scaler.transform(train.reshape(-1, 1))
-    test_scaled = X_scaler.transform(test.reshape(-1, 1))
+    
+    series = read_timeserie()
+
+    # split and scale dataset
+    train_scaled, test_scaled = split_scale(series, past_lookup)
+
     # train autoregression
     model = AR(train_scaled)
     model_fit = model.fit()
@@ -125,7 +127,7 @@ def ARHistory(history):
     print('Test MSE: %.3f' % MSE)
    # plot results
     plt.figure()
-    plt.title("Prediction Plot for history of " + history)
+    plt.title("Autoregression with retraining plot of " + str(past_lookup) + " months")
     plt.plot(test_scaled)
     plt.plot(predictions, color='red')
     # Save our graph 
@@ -138,23 +140,10 @@ def ARHistory(history):
 
 @app.route('/Linear/<history>')
 def Linear(history):
-    import pandas as pd
-    import matplotlib.pyplot as plt
-    import os
-
-
     print("doing Linear with ", history)
 
     history = int(history)
-    ## read dataset
-    filename = "X.csv"
-    output_data = "static/data/output" 
-    filepath = os.path.join(output_data,filename)
-    X = pd.read_csv(filepath,index_col=False, header=0)
-    filename = "y.csv"
-    output_data = "static//data/output" 
-    filepath = os.path.join(output_data,filename)
-    y = pd.read_csv(filepath,index_col=False, names=["Value"])
+    X, y = read_dataset()
 
     # overfitting treatment 
     X = X.drop(columns=["lag12", "peek12"])
@@ -182,7 +171,7 @@ def Linear(history):
     plt.scatter(model.predict(X_test_scaled), model.predict(X_test_scaled) - y_test_scaled, c="red", label="Testing Data")
     plt.legend()
     plt.hlines(y=0, xmin=y_test_scaled.min(), xmax=y_test_scaled.max())
-    plt.title("Residual Plot for history of " + str(history))
+    plt.title("Linear Regression Residual Plot of " + str(history) + " months")
     plt.tight_layout()
     plt.savefig("static/images/LR_residual.png")
     print("DONE LINEAR")
