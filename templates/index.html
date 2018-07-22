@@ -217,33 +217,57 @@
            <div class="col-md-12">
               <div class="row">     
                 <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">
-        
-                                <a class="nav-link active" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">LR Error</a>
-                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
+                        <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">                                
+                                <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
                                 <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
                                 <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/Training</a>
+                                <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">LR Error</a>
                         </div>
                 </div>
                 <div class="col-9">
                         <div class="tab-content" id="v-pillsr-tabContent">
-                                
-                                <div class="tab-pane fade show active" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">
-                                                <img src="{{ url_for('static', filename='images/LR_residual.png') }}" alt="">
-                                        Linear regression resideal error
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                        <div class="panel">
+                                                        <h5 class="panel-header">Prediction score:</h5>
+                                                        <div class="panel-body" style="border:solid;align-content:center">
+                                                        <span id="prediction_P">MSE: 13.598</span>
+                                                        </div>
+                                        </div>
                                         <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt="">
                                         Naive Persistence model will forecast based on what it has seen. Prediction in Red. Actual in Blue.
                                 </div>
+                                
                                 <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab">
+                                        <div class="panel">
+                                                <h5 class="panel-header">Prediction score:</h5>
+                                                <div class="panel-body" style="border:solid;align-content:center">
+                                                <span id="prediction_AR">MSE: 0.336</span>
+                                                </div>
+                                        </div>
                                         <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt="">
                                         Improved prediction with autoregresssion model. Prediction in Red. Actual in Blue.
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab">
+                                        <div class="panel">
+                                                <h5 class="panel-header">Prediction score:</h5>
+                                                <div class="panel-body" style="border:solid;align-content:center">
+                                                <span id="prediction_ARH">MSE: 0.041</span>
+                                                </div>
+                                        </div>  
                                         <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt="">
                                         Further improved prediction with autoregresssion model with history. Prediction in Red. Actual in Blue.
                                 </div>
+                                <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">         
+                                                <div class="panel">
+                                                   <h5 class="panel-header">Prediction score:</h5>
+                                                   <div class="panel-body" style="border:solid;align-content:center">
+                                                   <span id="prediction_LR">MSE: 0.10041120657022053, R2: 0.9483863870336732</span>
+                                                  </div>
+                                                </div>      
+                                                <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt="">
+                                                Linear regression residual error
+                                </div>
+                                        
                         </div>
                 </div>
              </div>    
