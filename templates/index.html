@@ -20,30 +20,38 @@
         <div class=row>
             <div class="col-md-12">
             <div class="jumbotron text-center">
-                    <strong><h1>A forecast of energy consumption</h1></strong>
-                    <p> Insight into Solar: A time series model prediction </p>
+                    <strong><h1><span class="category" style="color: #2e925b;">Forecast of Renewable Energy Consumption</span></h1></strong>
+                    <h4>Insight into Solar</h4>
+
+          
             </div>
             </div>
         </div>
         <div class="row">
         <div class="col-md-12">
-                <h4> Exploration into Solar using Machine Learning </h4>
+                <h4> Exploration into Monthly Solar Energy using four distinct techniques:</h4>
+                <p>Autoregression, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor</p>
+                        
             <hr>    
             <p>
-                    Motivated by trends in recent articles referring to an uptake of solar energy consumption, we took the task to have a closer look at 
-                    solar energy consumption for residential use in the United States.
+                The world of solar has advanced dramatically, solar’s clean energy is becoming more accessible every day.
+                High residential electricity costs prompt homeowners to turn to solar for financial savings and environmental benefits.
+                These trends motivated us to take a closer look at residential solar energy consumption in the United States. 
+                    
             </p> 
+            <br>
             <p>       
-                    In order to better understand the energy consumption we are exploring data from the following sources:
+                    <h5>To better understand energy consumption, we are exploring data from the following sources:</h5>
                     <ul>
-                            <li> EIA</li>
-                            <li> Temperature</li>
+                            <li> Solar Energy Consumption by the residential sector from<a href="https://www.eia.gov/totalenergy/data/browser/?tbl=T02.01"> U.S. Energy Information Administration</a></li>
+                            <li> Residential Energy Demand Temperature Index (REDTI) from<a href="https://www.ncdc.noaa.gov/societal-impacts/redti/USA"> NOAA National Oceanic and Atmospheric Administration</a></li>
+                            <li>Average Retail Price of Residential Electricity from<a href="https://www.eia.gov/totalenergy/data/browser/?tbl=T09.08#/?f=M"> U.S. Energy Information Administration</a></li>
                     </ul>
 
-                    For an overall perspective we decided to gather data at monthly granularity.       
+                    We gathered monthly data for an overall perspective.       
             </p>
-            <p> Using the same data we wanted to see the behaviour of different prediction models from the most simplistic to a bit more 
-                    ellaborate models that have been used previously and it gives us a comparison across the different approaches.   
+            <p> To identify the predictive model that best fits our time series, we leveraged a range of approaches, from the most simplistic to
+                robust machine learning models.
             </p>
         </div>    
         </div>
@@ -55,18 +63,11 @@
         <div class="row">
         <div class="col-md-12">
           <div class=jumbotron>
-                <h5> Feature Exploration</h5>
-                <p>
-                We have a time series of values for Solar energy consumption. We explore the correlation to determing if we can use the time series for prediction.
-                </p>
-                <p> We explore the series by plotting:
-                <ul>
-                        <li>  Time serie  </li>
-                        <li>   Lag plot   </li>
-                        <li>  Autocorrelation  </li>
-                </ul>
-                </p>
-          
+                <h5><span class="category" style="color: #2e925b;">Time Serie Exploration</span></h5>
+                <br>
+                <p> We explored the correlation of our solar engery consumption to determine the relationship between the observation and its historic values over time.</p>
+                <p>This provided a threshold for selecting more relevant lag values for prediction.</p>
+
            </div>
            <div class="row">
                 <div class="col-3">
@@ -81,15 +82,24 @@
                                 <div class="tab-pane fade show active" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
 
                                         <img src="{{ url_for('static', filename='images/timeserie.png') }}" alt="">
-                                        The input is a time serie from 1984 to date showing energy consumption
+                                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.
+                                        The units are in trillion BTU and there are 351 observations.</p>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
                                         <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
-                                        We do the lag plot to determine if there is a correlation between time t and t-1
+                                        <p class="category">To check the existence of autocorrelation in our time series dataset, 
+                                        we plots the solar data (t) on the x-axis against the solar on the previous day (t-1) on the y-axis.
+                                        We can see a large pool of observations along a diagonal line of the plot. It clearly shows a relationship or some correlation.
+                                        To confirm our visual analysis we used a statistical test (Pearson correlation coefficient) 
+                                        that revealed a strong positive correlation (0.96) between the observation and the lag=1 value.</p>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
                                         <img src="{{ url_for('static', filename='images/autocorr.png') }}" alt="">
-                                        We use autocorrelation capability to plot
+                                        <p class="category">We plot the correlation coefficient for each lag variable. Show the relationship between the observation and its historic values over time.
+                                        The plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
+                                        The plot also includes solid and dashed lines that indicate the 95% and 99% confidence interval for the correlation values. 
+                                        Correlation values above these lines are more significant than those below the line.</p>
+
                                 </div>
                                 
                         </div>

@@ -105,10 +105,10 @@ def Autoregression(history):
     print(" done AR ", score)
     return jsonify(score)
 
-@app.route('/ARHistory/<history>')
-def ARHistory(history):
-    print("Autoregression History with past lookup of ", history)
-    past_lookup = int(history)
+@app.route('/ARHistory/<past>')
+def ARHistory(past):
+    print("Autoregression History with past lookup of ", past)
+    past_lookup = int(past)
     
     series = read_timeserie()
 
@@ -140,7 +140,7 @@ def ARHistory(history):
     print('Test MSE: %.3f' % MSE)
    # plot results
     plt.figure()
-    plt.title("Autoregression with retraining plot of " + str(past_lookup) + " months")
+    plt.title("Autoregression with retraining plot of " + past + " months")
     plt.plot(test_scaled)
     plt.plot(predictions, color='red')
     # Save our graph 
@@ -171,7 +171,7 @@ def Linear(history):
     plt.scatter(model.predict(X_test_scaled), model.predict(X_test_scaled) - y_test_scaled, c="red", label="Testing Data")
     plt.legend()
     plt.hlines(y=0, xmin=y_test_scaled.min(), xmax=y_test_scaled.max())
-    plt.title("Linear Regression Residual Plot of " + str(history) + " months")
+    plt.title("Linear Regression Residual Plot of " + history + " months")
     plt.tight_layout()
     plt.savefig("static/images/LR_residual.png")
     print("DONE LINEAR")
@@ -181,6 +181,7 @@ def Linear(history):
     MSE = mean_squared_error(y_test_scaled, predictions)
     r2 = model.score(X_test_scaled, y_test_scaled)
     score_linear = {"r2": r2,"MSE": MSE}
+    
     print(score_linear)
     return jsonify(score_linear)
 
@@ -223,7 +224,7 @@ def RandomForrest(history):
     # split and train X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
         
-    rf = RandomForestRegressor(n_estimators = 10)
+    rf = RandomForestRegressor(bootstrap=False,max_depth=None,max_features="sqrt",min_samples_leaf=1,min_samples_split=2,n_estimators=400)
     
     y_train_ravel = np.ravel(y_train_scaled)
 

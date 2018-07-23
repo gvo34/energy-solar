@@ -4,6 +4,9 @@ var init_value = document.getElementById('thedropdown');
 console.log(init_value.options[init_value.selectedIndex].value)
 
 
+
+  
+
 function ARHistory(history){
     console.log("calling Autoregression with history ", history)
     d3.json(`/ARHistory/${history}`, (error, response) => {
@@ -50,10 +53,7 @@ function Linear(history){
         // Update prediction score
         var init_score = document.getElementById('prediction_LR');
         init_score.innerHTML = "MSE: "+response.MSE + " r2: "+ response.r2;
-
-        //refresh image NEED THIS TO WORK
-        //document.getElementById('LRimg').innerHTML = "static/images/LR_residual.png"
-      });
+    });
 }
 
 function MLP(history){
