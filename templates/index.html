@@ -173,151 +173,169 @@
 
                     <hr>
         <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h5>Prediction models</h5>
-                <p>
-                        We explore ML models as recommended by research. The simplest mode is Persistence, basically the past predicts the future. 
-                        The next is Autoregression model for predicting solar energy consumption based on the data itself. 
-                        
-                        The autoregression model is based if a linear model y = b0 + b1X  where y and x are 2 steps away:
-                                X(t=1) = b0 + b1(X(t-1)) + b2(X(t-2))
-
-                        We use the datase created for Linear Regression
-
-                        We use lag data for MLP
-
-                        Finally we combine the results with Random Forest
-                        <ul>
+                <div class="col-md-12">
+                <div class="jumbotron">
+                        <h5>Prediction models</h5>
+                        <p>
+                                We explore ML models as recommended by research. The simplest mode is Persistence, basically the past predicts the future. 
+                                The next is Autoregression model for predicting solar energy consumption based on the data itself. 
                                 
-                                <li> Persistence</li>
-                                <li> Autoregression</li>
-                                <li> Autoregression with retraining </li>
-                                <li> Linear regression </li>
-                                <li> MLP </li>
-                                <li> Random Forrest for combined method or AR, LR and MLP</li>
-                        </ul>
-                </p>
-                <p> For models other than the Persistence model, we can vary the window to use for training and predicting the model. Select the period of time to be used for forecasting with autoregression models or testing with LR and MLP
-                        and notice the difference in the Prediction score for each case.
-                <div class="dropdown">
-                        <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown button
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenuselection">
-                          <a class="dropdown-item" href="#">12 months</a>
-                          <a class="dropdown-item" href="#">6 months</a>
-                          <a class="dropdown-item" href="#">24 months</a>
+                                The autoregression model is based if a linear model y = b0 + b1X  where y and x are 2 steps away:
+                                        X(t=1) = b0 + b1(X(t-1)) + b2(X(t-2))
+
+                                We use the datase created for Linear Regression
+
+                                We use lag data for MLP
+
+                                Finally we combine the results with Random Forest
+                                <ul>
+                                        
+                                        <li> Persistence</li>
+                                        <li> Autoregression</li>
+                                        <li> Autoregression with retraining </li>
+                                        <li> Linear regression </li>
+                                        <li> MLP </li>
+                                        <li> Random Forrest for combined method or AR, LR and MLP</li>
+                                </ul>
+                        </p>
+                        <p> For models other than the Persistence model, we can vary the window to use for training and predicting the model. Select the period of time to be used for forecasting with autoregression models or testing with LR and MLP
+                                and notice the difference in the Prediction score for each case.
+                        <div class="dropdown">
+                                <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown button
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenuselection">
+                                <a class="dropdown-item" href="#">12 months</a>
+                                <a class="dropdown-item" href="#">6 months</a>
+                                <a class="dropdown-item" href="#">24 months</a>
+                                </div>
+                        </div> -->
+                        <select class="btn btn-secondary dropdown-toggle" id="thedropdown" onchange="gethistory(this)">
+                                <option class="dropdown-item" value="12">last 12 months</option>
+                                <option class="dropdown-item" value="6">last 6 months</option>
+                                <option class="dropdown-item" value="24">last 24 months</option>
+                        </select>
                         </div>
-                      </div> -->
-                      <select class="btn btn-secondary dropdown-toggle" id="thedropdown" onchange="gethistory(this)">
-                        <option class="dropdown-item" value="12">last 12 months</option>
-                        <option class="dropdown-item" value="6">last 6 months</option>
-                        <option class="dropdown-item" value="24">last 24 months</option>
-                      </select>
+                        </p>
                 </div>
-                </p>
-        </div>
                  <hr>
                  
-        <div class="row">
-           <div class="col-md-12">
-              <div class="row">     
-                <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">                                
-                                <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
-                                <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
-                                <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/retraining</a>
-                                <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">Linear Regression</a>
-                                <a class="nav-link" id="v-pills-seven-tab" data-toggle="pill" href="#v-pills-seven" role="tab" aria-controls="v-pills-seven" aria-selected="false">MLP</a>
-                                <a class="nav-link" id="v-pills-eight-tab" data-toggle="pill" href="#v-pills-eight" role="tab" aria-controls="v-pills-eight" aria-selected="false">Random Forrest</a>
+                <div class="row">
+                <div class="col-md-12">
+                <div class="row">     
+                        <div class="col-3">
+                                <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">                                
+                                        <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
+                                        <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
+                                        <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/retraining</a>
+                                        <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">Linear Regression</a>
+                                        <a class="nav-link" id="v-pills-seven-tab" data-toggle="pill" href="#v-pills-seven" role="tab" aria-controls="v-pills-seven" aria-selected="false">MLP</a>
+                                        <a class="nav-link" id="v-pills-eight-tab" data-toggle="pill" href="#v-pills-eight" role="tab" aria-controls="v-pills-eight" aria-selected="false">Random Forrest</a>
+                                </div>
                         </div>
-                </div>
-                <div class="col-9">
-                        <div class="tab-content" id="v-pillsr-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
-                                        <div class="panel">
+                        <div class="col-9">
+                                <div class="tab-content" id="v-pillsr-tabContent">
+                                        <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                                <div class="panel">
+                                                                <h5 class="panel-header">Prediction score:</h5>
+                                                                <div class="panel-body" style="border:solid;align-content:center">
+                                                                <span id="prediction_P">MSE: 13.598</span>
+                                                                </div>
+                                                </div>
+                                                <!-- <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt=""> -->
+                                                Naive Persistence model will forecast based on what it has seen. Prediction in Red. Actual in Blue.
+                                        </div>
+                                        
+                                        <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab">
+                                                <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
-                                                        <span id="prediction_P">MSE: 13.598</span>
+                                                        <span id="prediction_AR">MSE: 0.336</span>
                                                         </div>
-                                        </div>
-                                        <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt="">
-                                        Naive Persistence model will forecast based on what it has seen. Prediction in Red. Actual in Blue.
-                                </div>
-                                
-                                <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab">
-                                        <div class="panel">
-                                                <h5 class="panel-header">Prediction score:</h5>
-                                                <div class="panel-body" style="border:solid;align-content:center">
-                                                <span id="prediction_AR">MSE: 0.336</span>
                                                 </div>
+                                                <!-- <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt=""> -->
+                                                Improved prediction with autoregresssion model. Prediction in Red. Actual in Blue.
                                         </div>
-                                        <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt="">
-                                        Improved prediction with autoregresssion model. Prediction in Red. Actual in Blue.
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab">
-                                        <div class="panel">
-                                                <h5 class="panel-header">Prediction score:</h5>
-                                                <div class="panel-body" style="border:solid;align-content:center">
-                                                <span id="prediction_ARH">MSE: 0.041</span>
-                                                </div>
-                                        </div>  
-                                        <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt="">
-                                        Further improved prediction with autoregresssion model with history. Prediction in Red. Actual in Blue.
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">         
+                                        <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab">
                                                 <div class="panel">
-                                                   <h5 class="panel-header">Prediction score:</h5>
-                                                   <div class="panel-body" style="border:solid;align-content:center">
-                                                   <span id="prediction_LR">MSE: 0.10041120657022053, R2: 0.9483863870336732</span>
-                                                  </div>
-                                                </div>      
-                                                <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt="">
-                                                Linear regression residual error
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-seven" role="tabpanel" aria-labelledby="v-pills-seven-tab">         
-                                                <div class="panel">
-                                                   <h5 class="panel-header">Prediction score:</h5>
-                                                   <div class="panel-body" style="border:solid;align-content:center">
-                                                   <span id="prediction_MLP">r2: 0.7641087240871138</span>
-                                                  </div>
-                                                </div>      
-                                                <!-- <img id="LRimg" src="{{ url_for('static', filename='images/MLP_residual.png') }}" alt=""> -->
-                                               To be filled
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-eight" role="tabpanel" aria-labelledby="v-pills-eight-tab">         
-                                                <div class="panel">
-                                                   <h5 class="panel-header">Prediction score:</h5>
-                                                   <div class="panel-body" style="border:solid;align-content:center">
-                                                   <span id="prediction_RF">YET To find out</span>
-                                                  </div>
-                                                </div>      
-                                                <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
+                                                        <h5 class="panel-header">Prediction score:</h5>
+                                                        <div class="panel-body" style="border:solid;align-content:center">
+                                                        <span id="prediction_ARH">MSE: 0.041</span>
+                                                        </div>
+                                                </div>  
+                                                <!-- <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt=""> -->
+                                                Further improved prediction with autoregresssion model with history. Prediction in Red. Actual in Blue.
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">         
+                                                        <div class="panel">
+                                                        <h5 class="panel-header">Prediction score:</h5>
+                                                        <div class="panel-body" style="border:solid;align-content:center">
+                                                        <span id="prediction_LR">MSE: 0.10041120657022053, R2: 0.9483863870336732</span>
+                                                        </div>
+                                                        </div>      
+                                                        <!-- <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt=""> -->
+                                                        Linear regression residual error
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-seven" role="tabpanel" aria-labelledby="v-pills-seven-tab">         
+                                                        <div class="panel">
+                                                        <h5 class="panel-header">Prediction score:</h5>
+                                                        <div class="panel-body" style="border:solid;align-content:center">
+                                                        <span id="prediction_MLP">r2: 0.7641087240871138</span>
+                                                        </div>
+                                                        </div>      
+                                                        <!-- <img id="LRimg" src="{{ url_for('static', filename='images/MLP_residual.png') }}" alt=""> -->
                                                 To be filled
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-eight" role="tabpanel" aria-labelledby="v-pills-eight-tab">         
+                                                        <div class="panel">
+                                                        <h5 class="panel-header">Prediction score:</h5>
+                                                        <div class="panel-body" style="border:solid;align-content:center">
+                                                        <span id="prediction_RF">YET To find out</span>
+                                                        </div>
+                                                        </div>      
+                                                        <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
+                                                        To be filled
+                                        </div>
+                                                
                                 </div>
-                                        
                         </div>
+                </div>    
                 </div>
-             </div>    
-           </div>
+                </div>
+        </div>
+        </div>
+
+        <!-- Future trend -->
+
+        <hr>
+                <div class="row">
+                <div class="col-md-12">
+                <div class="jumbotron">
+                        <h5>Future Trend</h5>
+                        <p>
+                                MLP obtained the best model accuracy with the dataset.
+                        </p>
+                        <p>
+                               Predict solar energy consumption with this model
+                        
+                        </p>
+                </div>
+                </div>
+                </div>
+                        <hr>
+                        
+                <div class="row">
+                <div class="col-md-12">
+                <div class="row">     
+                       
+                                <img src="{{ url_for('static', filename='images/futuretrends.png') }}" alt="Future Trends image">
+                </div>    
         </div>
         </div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-    </div>
     </div>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
