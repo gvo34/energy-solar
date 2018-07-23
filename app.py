@@ -1,19 +1,16 @@
+## Dependencies
 import os
 import io
 import numpy as np
-## Dependencies
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
-from statsmodels.tsa.ar_model import AR
 from sklearn.preprocessing import StandardScaler
- 
-# import keras
-# from keras.preprocessing import image
-# from keras.preprocessing.image import img_to_array
-# from keras.applications.xception import (
-#     Xception, preprocess_input, decode_predictions)
-# from keras import backend as K
+## Models
+from statsmodels.tsa.ar_model import AR
+from sklearn.linear_model import LinearRegression
+from sklearn.neural_network import MLPRegressor
+from sklearn.ensemble import RandomForestRegressor
 
 from flask import Flask, request, redirect, url_for, jsonify, render_template
 
@@ -29,6 +26,7 @@ def read_dataset():
     output_data = "static//data/output" 
     filepath = os.path.join(output_data,filename)
     y = pd.read_csv(filepath,index_col=False, names=["Value"])
+    print("X ", X.columns)
     return X, y
 
 def read_timeserie():
@@ -53,6 +51,21 @@ def split_scale(series, past_look):
     train_scaled = X_scaler.transform(train.reshape(-1, 1))
     test_scaled = X_scaler.transform(test.reshape(-1, 1))
     return train_scaled, test_scaled
+
+def split_scale_Xy(X, y, past_look):
+    ## Split
+    X_train, X_test = X[1:len(X)-past_look], X[len(X)-past_look:]
+    y_train, y_test = y[1:len(X)-past_look], y[len(X)-past_look:] 
+    ## Scale
+    X_scaler = StandardScaler().fit(X_train)
+    y_scaler = StandardScaler().fit(y_train)
+    X_train_scaled = X_scaler.transform(X_train)
+    X_test_scaled = X_scaler.transform(X_test)
+    y_train_scaled = y_scaler.transform(y_train)
+    y_test_scaled = y_scaler.transform(y_test)
+    print(len(X_train), len(X_test), len(y_train), len(y_test))
+    print("train observations ", len(X_train_scaled), "test observations: ",len(X_test_scaled))
+    return X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled
 
 
 # persistence model
@@ -142,27 +155,14 @@ def ARHistory(history):
 def Linear(history):
     print("doing Linear with ", history)
 
-    history = int(history)
+    months = int(history)
     X, y = read_dataset()
 
     # overfitting treatment 
     X = X.drop(columns=["lag12", "peek12"])
 
-
-    ## Split
-    X_train, X_test = X[1:len(X)-history], X[len(X)-history:]
-    y_train, y_test = y[1:len(X)-history], y[len(X)-history:] 
-    
-    ## Scale
-    from sklearn.preprocessing import StandardScaler
-    X_scaler = StandardScaler().fit(X_train)
-    y_scaler = StandardScaler().fit(y_train)
-    X_train_scaled = X_scaler.transform(X_train)
-    X_test_scaled = X_scaler.transform(X_test)
-    y_train_scaled = y_scaler.transform(y_train)
-    y_test_scaled = y_scaler.transform(y_test)
-
-    from sklearn.linear_model import LinearRegression
+    # split and train X and y
+    X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
     model = LinearRegression()
     model.fit(X_train_scaled, y_train_scaled)
 
@@ -183,6 +183,60 @@ def Linear(history):
     score_linear = {"r2": r2,"MSE": MSE}
     print(score_linear)
     return jsonify(score_linear)
+
+
+@app.route('/MLP/<history>')
+def MLP(history):
+    print("doing MLP with ", history)
+
+    months = int(history)
+    X, y = read_dataset()
+    # overfitting treatment 
+    X = X.drop(columns=["lag12", "peek12"])
+    
+    # split and train X and y
+    X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
+    
+    mlp = MLPRegressor(max_iter=1000, learning_rate_init=0.1, random_state=0, learning_rate='adaptive',
+                    activation='relu', solver='adam', tol=0.0, verbose=2 , hidden_layer_sizes = (20,20))
+
+    y_train_ravel = np.ravel(y_train_scaled)
+    mlp.fit(X_train_scaled, y_train_ravel)
+    predictions = mlp.predict(X_test_scaled)
+    MSE = mean_squared_error(y_test_scaled, predictions)
+    r2 = mlp.score(X_test_scaled, y_test_scaled)
+    print(f"MSE: {MSE}, r2: {r2}")
+    score = {"r2": r2,"MSE": MSE}
+    return jsonify(score)
+
+
+@app.route('/RF/<history>')
+def RandomForrest(history):
+    print("doing Random Forrest with ", history)
+
+    months = int(history)
+    X, y = read_dataset()
+
+    # overfitting treatment 
+    X = X.drop(columns=["lag12", "peek12"])
+    
+    # split and train X and y
+    X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
+        
+    rf = RandomForestRegressor(n_estimators = 10)
+    
+    y_train_ravel = np.ravel(y_train_scaled)
+
+    rf.fit(X_train_scaled, y_train_ravel)
+
+    predictions = rf.predict(X_test_scaled)
+    y_test_ravel = np.ravel(y_test_scaled)
+    MSE = mean_squared_error(y_test_ravel, predictions)
+    r2 = rf.score(X_test_scaled, y_test_ravel)
+
+    print(f"MSE: {MSE}, r2: {r2}")
+    score = {"r2": r2,"MSE": MSE}
+    return jsonify(score)
 
 
 

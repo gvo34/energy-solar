@@ -56,6 +56,40 @@ function Linear(history){
       });
 }
 
+function MLP(history){
+    console.log("calling MLP with history ", history)
+    d3.json(`/MLP/${history}`, (error, response) => {
+        if (error) return console.warn(error);
+        
+        // Model score
+        console.log("MLP with the history of ", history, " score of ", response);
+        
+        // Update prediction score
+        var init_score = document.getElementById('prediction_MLP');
+        init_score.innerHTML = "MSE: "+response.MSE + " r2: "+ response.r2;
+
+        //refresh image NEED THIS TO WORK
+        //document.getElementById('LRimg').innerHTML = "static/images/LR_residual.png"
+      });
+}
+
+function RandomForrest(history){
+    console.log("calling RandomForrest with history ", history)
+    d3.json(`/RF/${history}`, (error, response) => {
+        if (error) return console.warn(error);
+        
+        // Model score
+        console.log("RF with the history of ", history, " score of ", response);
+        
+        // Update prediction score
+        var init_score = document.getElementById('prediction_RF');
+        init_score.innerHTML = "MSE: "+response.MSE + " r2: "+ response.r2;
+
+        //refresh image NEED THIS TO WORK
+        //document.getElementById('LRimg').innerHTML = "static/images/LR_residual.png"
+      });
+}
+
 function gethistory(live_value){
 
     newvalue = live_value.options[live_value.selectedIndex].value;
@@ -64,6 +98,9 @@ function gethistory(live_value){
     Linear(newvalue);
     Autoregression(newvalue);
     ARHistory(newvalue);
+    MLP(newvalue);
+    RandomForrest(newvalue);
+
 
 }
 
