@@ -250,6 +250,15 @@ def RandomForrest(history):
     MSE = mean_squared_error(y_test_ravel, predictions)
     r2 = rf.score(X_test_scaled, y_test_ravel)
 
+    plt.figure()
+    plt.plot(y_test_ravel, color='blue')
+    plt.plot(predictions, color='red')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
+    plt.title("Random Forrest of " + history + " months")
+    # Save our graph 
+    plt.tight_layout()
+    plt.savefig("static/images/RFmodel"+ history +".png")
+
     print(f"MSE: {MSE}, r2: {r2}")
     score = {"r2": r2,"MSE": MSE}
     return jsonify(score)
