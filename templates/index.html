@@ -73,6 +73,7 @@
                 <div class="col-3">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Time serie</a>
+                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Decomposition</a>
                                 <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two" role="tab" aria-controls="v-pills-two" aria-selected="false">Lag Plot</a>
                                 <a class="nav-link" id="v-pills-three-tab" data-toggle="pill" href="#v-pills-three" role="tab" aria-controls="v-pills-three" aria-selected="false">Autocorrelation</a>
                         </div>
@@ -85,14 +86,19 @@
                                         <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.
                                         The units are in trillion BTU and there are 351 observations.</p>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
-                                        <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
-                                        <p class="category">To check the existence of autocorrelation in our time series dataset, 
-                                        we plots the solar data (t) on the x-axis against the solar on the previous day (t-1) on the y-axis.
-                                        We can see a large pool of observations along a diagonal line of the plot. It clearly shows a relationship or some correlation.
-                                        To confirm our visual analysis we used a statistical test (Pearson correlation coefficient) 
-                                        that revealed a strong positive correlation (0.96) between the observation and the lag=1 value.</p>
+                                <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                        <img src="{{ url_for('static', filename='images/Decomposetimeserie.png') }}" alt="Decomposition">
+                                        <p class="category">Time series can be decomposed into level, trend, seasonality, noise
                                 </div>
+                                <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
+                                                <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
+                                                <p class="category">To check the existence of autocorrelation in our time series dataset, 
+                                                we plots the solar data (t) on the x-axis against the solar on the previous day (t-1) on the y-axis.
+                                                We can see a large pool of observations along a diagonal line of the plot. It clearly shows a relationship or some correlation.
+                                                To confirm our visual analysis we used a statistical test (Pearson correlation coefficient) 
+                                                that revealed a strong positive correlation (0.96) between the observation and the lag=1 value.</p>
+                                        </div>
+                                        
                                 <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
                                         <img src="{{ url_for('static', filename='images/timeseriesautocorrelation.png') }}" alt="">
                                         <p class="category">We plot the correlation coefficient for each lag variable. Show the relationship between the observation and its historic values over time.
