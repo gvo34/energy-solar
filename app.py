@@ -237,7 +237,8 @@ def RandomForrest(history):
     
     # split and train X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
-        
+
+    # results from RandomForrest RandomizedSearchCV call    
     rf = RandomForestRegressor(bootstrap=False,max_depth=None,max_features="sqrt",min_samples_leaf=1,min_samples_split=2,n_estimators=400)
     
     y_train_ravel = np.ravel(y_train_scaled)
