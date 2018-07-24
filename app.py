@@ -100,7 +100,7 @@ def Autoregression(history):
     plt.plot(predictions, color='red')
     # Save our graph 
     plt.tight_layout()
-    plt.savefig("static/images/ARmodel.png")
+    plt.savefig("static/images/ARmodel" + history+ ".png")
     score = {"MSE": MSE}
     print(" done AR ", score)
     return jsonify(score)
@@ -145,7 +145,7 @@ def ARHistory(past):
     plt.plot(predictions, color='red')
     # Save our graph 
     plt.tight_layout()
-    plt.savefig("static/images/ARmodel_history.png")
+    plt.savefig("static/images/ARmodel_history" + past+ ".png")
     score = {"MSE": MSE}
     print(" done ARHistory ", score)
     return jsonify(score)
@@ -173,7 +173,7 @@ def Linear(history):
     plt.hlines(y=0, xmin=y_test_scaled.min(), xmax=y_test_scaled.max())
     plt.title("Linear Regression Residual Plot of " + history + " months")
     plt.tight_layout()
-    plt.savefig("static/images/LR_residual.png")
+    plt.savefig("static/images/LR_residual_" + history+ ".png")
     print("DONE LINEAR")
 
     

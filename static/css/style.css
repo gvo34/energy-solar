@@ -6,7 +6,8 @@
 
   
 img{
-    height:100%;
+    height:90%;
+    align-content: center;
 }
 
 /* set map, body, and html to 100% of the screen size */
@@ -47,4 +48,24 @@ html, body
     max-width:60em;
     padding: 0.2em;
 }
+  
+.carousel{
+    background-color: rgb(241, 239, 239);
+    margin-left:25px;
+    height:100%;
+    padding-bottom: 40px;
 
+}
+.carousel-inner > .carousel-item > img{
+    margin:auto;
+}
+
+.trend{
+    background-color: red;
+    align-content: center;
+    
+}
+
+.trend > img{
+    margin:auto;
+}
