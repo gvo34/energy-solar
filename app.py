@@ -95,9 +95,12 @@ def Autoregression(history):
     MSE = mean_squared_error(test_scaled, predictions)
     # plot results
     plt.figure()
-    plt.title("Autoregression plot of " + history + " months")
+    
     plt.plot(test_scaled)
     plt.plot(predictions, color='red')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
+    plt.title("Autoregression plot of " + history + " months")
+    
     # Save our graph 
     plt.tight_layout()
     plt.savefig("static/images/ARmodel" + history+ ".png")
@@ -143,6 +146,7 @@ def ARHistory(past):
     plt.title("Autoregression with retraining plot of " + past + " months")
     plt.plot(test_scaled)
     plt.plot(predictions, color='red')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
     # Save our graph 
     plt.tight_layout()
     plt.savefig("static/images/ARmodel_history" + past+ ".png")
@@ -166,22 +170,20 @@ def Linear(history):
     model = LinearRegression()
     model.fit(X_train_scaled, y_train_scaled)
 
-    plt.figure()
-    plt.scatter(model.predict(X_train_scaled), model.predict(X_train_scaled) - y_train_scaled, c="blue", label="Training Data")
-    plt.scatter(model.predict(X_test_scaled), model.predict(X_test_scaled) - y_test_scaled, c="red", label="Testing Data")
-    plt.legend()
-    plt.hlines(y=0, xmin=y_test_scaled.min(), xmax=y_test_scaled.max())
-    plt.title("Linear Regression Residual Plot of " + history + " months")
-    plt.tight_layout()
-    plt.savefig("static/images/LR_residual_" + history+ ".png")
-    print("DONE LINEAR")
-
-    
     predictions = model.predict(X_test_scaled)
     MSE = mean_squared_error(y_test_scaled, predictions)
     r2 = model.score(X_test_scaled, y_test_scaled)
     score_linear = {"r2": r2,"MSE": MSE}
-    
+    plt.figure()
+    # plot
+    plt.plot(y_test_scaled)
+    plt.plot(predictions, color='red')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
+    # Save our graph 
+    plt.title("Linear Regression of " + history + " months")
+    plt.tight_layout()
+    plt.savefig("static/images/LinearRmodel" + history+ ".png")
+    print("DONE LINEAR")
     print(score_linear)
     return jsonify(score_linear)
 
@@ -206,6 +208,18 @@ def MLP(history):
     predictions = mlp.predict(X_test_scaled)
     MSE = mean_squared_error(y_test_scaled, predictions)
     r2 = mlp.score(X_test_scaled, y_test_scaled)
+
+    # plot
+    plt.figure()
+    y_test_ravel = np.ravel(y_test_scaled)
+    plt.plot(y_test_ravel)
+    plt.plot(predictions, color='red')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
+    plt.title("MLP of " + history + " months")
+    # Save our graph 
+    plt.tight_layout()
+    plt.savefig("static/images/MLPmodel"+ history +".png")
+
     print(f"MSE: {MSE}, r2: {r2}")
     score = {"r2": r2,"MSE": MSE}
     return jsonify(score)
