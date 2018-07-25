@@ -83,17 +83,24 @@
                                 <div class="tab-pane fade show active" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
 
                                         <img src="{{ url_for('static', filename='images/timeserie.png') }}" alt="">
-                                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.
-                                        The units are in trillion BTU and there are 351 observations.</p>
+                                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
+                                        <p class="category">The units are in trillion BTU and there are 351 observations.</p>
+                                        <p class="category">Since 2008, hundreds of thousands of solar panels have popped up across the country as an increasing number of Americans choose to power their daily lives with the sun’s energy. 
+                                        The Solar Energy Technologies Office invests in innovative research efforts to lower solar electricity costs every year.</p>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
                                         <img src="{{ url_for('static', filename='images/Decomposetimeserie.png') }}" alt="Decomposition">
-                                        <p class="category">Time series can be decomposed into level, trend, seasonality, noise
+                                        <p class="category">We aplied a multiplicative <i>seasonal_decompose()</i> function from the statsmodels library to best capture each component of the Residential Solar Energy Consumption.</p>
+                                        <p class="category">Time series decomposition involves thinking of a series as a combination of LEVEL: <i>The average value in the series</i>, 
+                                                TREND: <i>The increasing or decreasing value in the series</i>, SEASONALITY: <i>The repeating short-term cycle in the series</i>, 
+                                                and NOISE: <i>The random variation in the series</i>.</p>
+                                       
+
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
                                                 <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
                                                 <p class="category">To check the existence of autocorrelation in our time series dataset, 
-                                                we plots the solar data (t) on the x-axis against the solar on the previous day (t-1) on the y-axis.
+                                                we plot the solar data (t) on the x-axis against the target variable solar on the previous day (t-1) on the y-axis.
                                                 We can see a large pool of observations along a diagonal line of the plot. It clearly shows a relationship or some correlation.
                                                 To confirm our visual analysis we used a statistical test (Pearson correlation coefficient) 
                                                 that revealed a strong positive correlation (0.96) between the observation and the lag=1 value.</p>
@@ -101,9 +108,9 @@
                                         
                                 <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
                                         <img src="{{ url_for('static', filename='images/timeseriesautocorrelation.png') }}" alt="">
-                                        <p class="category">We plot the correlation coefficient for each lag variable. Show the relationship between the observation and its historic values over time.
+                                        <p class="category">We plot the correlation coefficient for each lag variable, which shows the relationship between the observation and its historic values over time.
                                         The plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
-                                        The plot also includes solid and dashed lines that indicate the 95% and 99% confidence interval for the correlation values. 
+                                        The plot also includes solid and dashed lines that indicate the 95% and 99% confidence intervals for the correlation values. 
                                         Correlation values above these lines are more significant than those below the line.</p>
 
                                 </div>
@@ -120,22 +127,10 @@
 <div class="row">
 <div class="col-md-12">
     <div class="jumbotron">
-        <h5>Dataset evaluation and preprocessing</h5>
-        <p>
-                We create a dataset by adding features related to the Solar consumption. 
-                <ul>
-                        <li>Price</li>
-                        <li> Total Energy </li>
-                        <li> Temperature Index</li>
-                        <li> Months as a category </li>
-                        <li> Lag: A look into the past</li>
-                        <li> Peek: A look into the future </li>
-                </ul>
-        </p>
-        <p>
-                We further explore if the features have any correlation, and if normalization improves the correlation. We filter best features
-            
-        </p>
+        <h5><span class="category" style="color: #2e925b;">Dataset preprocessing and evaluation</span></h5>
+        <br>
+        <p>We identified key features related to solar consumption to create our dataset.</p>
+        <p>We explored whether each feature has any correlation, and if normalization improves the correlation. Any unnecessary features have been filtered from our model.</p>
    </div>
 </div>
 </div>
@@ -153,7 +148,7 @@
                         <a class="nav-link" id="v-pills-twon2-tab" data-toggle="pill" href="#v-pills-twon2" role="tab" aria-controls="v-pills-twon2" aria-selected="false">Normalization Solar</a>
                         <a class="nav-link" id="v-pills-twof2-tab" data-toggle="pill" href="#v-pills-twof2" role="tab" aria-controls="v-pills-twof2" aria-selected="false">Box Plot</a>
 
-                        <!-- <a class="nav-link" id="v-pills-oner-tab" data-toggle="pill" href="#v-pills-oner" role="tab" aria-controls="v-pills-oner" aria-selected="true">Scaling</a> -->
+                        <a class="nav-link" id="v-pills-oner-tab" data-toggle="pill" href="#v-pills-oner" role="tab" aria-controls="v-pills-oner" aria-selected="true">Scaling</a>
 
                 </div>
         </div>
@@ -161,28 +156,41 @@
                 <div class="tab-content" id="v-pillsr-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-onef" role="tabpanel" aria-labelledby="v-pills-onef-tab">
                                 <img src="{{ url_for('static', filename='images/overallcorrelationheat.png') }}" alt="">
-                                Overall feature correlation 
+                        <p class="category">The matrix above captures the correlation of all features. We have to carefully select our features to avoid perfect multicollinearity 
+                                that occurs when two or more independent variables in a regression model exhibit a deterministic (perfectly predictable) linear relationship.</p>
+                                <ul>
+                                                <li>Price of Residential Electricity</li>
+                                                <li> Total Energy Consumption</li>
+                                                <li> Temperature Index</li>
+                                                <li> Solar Energy Consumption Months as features (get_dummies)</li>
+                                                <li> Solar Energy Consumption Lags: A look into the past (12 steeps delays)</li>
+                                                <li> Solar Energy Consumption Peeks: A look into the future (12 steeps (-1 lags))</li>
+                                </ul>
+                                
                         </div>
                         <div class="tab-pane fade" id="v-pills-onef2" role="tabpanel" aria-labelledby="v-pills-onef2-tab">
                                 <img src="{{ url_for('static', filename='images/correlationheat.png') }}" alt="">
-                                Most correlated 
+                                <p class="category"> Selected features that have a correlation greater than 0.5 with the target variable.</p>
                         </div>
                         <div class="tab-pane fade" id="v-pills-twon1" role="tabpanel" aria-labelledby="v-pills-twon1-tab">
-                                        <img src="{{ url_for('static', filename='images/original_norm_Price.png') }}" alt="">
-                                Normalization of Feature: Price
+                                <img src="{{ url_for('static', filename='images/original_norm_Price.png') }}" alt="">
+                                <p class="category">Log Transformation was applied to the Price because of its high skewness. The Log Transformation slightly reduced the Skewness of the Price.
+                                We can see the difference between the previous Plot and Log Transformation Plot. The Data now appears slightly more normally distributed.</p>
                         </div>
                         <div class="tab-pane fade" id="v-pills-twon2" role="tabpanel" aria-labelledby="v-pills-twon2-tab">
-                                        <img src="{{ url_for('static', filename='images/original_norm_Solar.png') }}" alt="">
-                                Normalization of Feature: Solar
+                                <img src="{{ url_for('static', filename='images/original_norm_Solar.png') }}" alt="">
+                                <p class="category">Log Transformation was applied to the target variable because of its high skewness. The Log Transformation slightly reduced the Skewness of the Solar energy consumption.
+                                We can see the difference between the previous Plot and Log Transformation Plot. The Data now appears slightly more normally distributed.</p>
                         </div>
                         <div class="tab-pane fade" id="v-pills-twof2" role="tabpanel" aria-labelledby="v-pills-twof2-tab">
                                 <img src="{{ url_for('static', filename='images/boxplotyear.png') }}" alt="">
-                                Box Plot
+                                <p class="category">The distribution of a our dataset Solar Energy Consumption changed dramatically in the recent years as seen from the Solar vs YearBuilt Boxplot. 
+                                We also observed the absence of outliers in these plots which won't need to be exploited later on.</p>
                         </div>
-                        <!-- <div class="tab-pane fade" id="v-pills-oner" role="tabpanel" aria-labelledby="v-pills-oner-tab">
+                        <div class="tab-pane fade" id="v-pills-oner" role="tabpanel" aria-labelledby="v-pills-oner-tab">
                                 <img src="{{ url_for('static', filename='images/LR_scaled_features.png') }}" alt="">
                                Scaled features
-                        </div> -->
+                        </div>
                 </div>
         </div>
      </div>    
@@ -196,31 +204,13 @@
         <div class="row">
                 <div class="col-md-12">
                 <div class="jumbotron">
-                        <h5>Prediction models</h5>
-                        <p>
-                                We explore ML models as recommended by research. The simplest mode is Persistence, basically the past predicts the future. 
-                                The next is Autoregression model for predicting solar energy consumption based on the data itself. 
-                                
-                                The autoregression model is based if a linear model y = b0 + b1X  where y and x are 2 steps away:
-                                        X(t=1) = b0 + b1(X(t-1)) + b2(X(t-2))
-
-                                We use the datase created for Linear Regression
-
-                                We use lag data for MLP
-
-                                Finally we combine the results with Random Forest
-                                <ul>
-                                        
-                                        <li> Persistence</li>
-                                        <li> Autoregression</li>
-                                        <li> Autoregression with retraining </li>
-                                        <li> Linear regression </li>
-                                        <li> MLP </li>
-                                        <li> Random Forrest for combined method or AR, LR and MLP</li>
-                                </ul>
-                        </p>
-                        <p> For models other than the Persistence model, we can vary the window to use for training and predicting the model. Select the period of time to be used for forecasting with autoregression models or testing with LR and MLP
-                                and notice the difference in the Prediction score for each case.
+                        <h5><span class="category" style="color: #2e925b;">Forecast</span></h5>
+                        <br>
+                        <p>To identify the predictive model that best fits our time series, we leveraged a range of approaches, from the most simplistic to robust machine learning models.</p>
+                        <p> We developed a test harness for the problem by splitting the observations into training and test sets,
+                        where we can vary the window assigned to the test set as “unseen” data that we wish to predict.</p> 
+                        <p>Select your desired window size of the test set to forecast the Solar Energy Consumption and compare the results for six distinct models:</p> 
+                        <p>Persistence, Autoregression, Autoregression re-train, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor.</p>
                         <div class="dropdown">
                                 <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Dropdown button
@@ -250,8 +240,8 @@
                                         <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
                                         <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/retraining</a>
                                         <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">Linear Regression</a>
-                                        <a class="nav-link" id="v-pills-seven-tab" data-toggle="pill" href="#v-pills-seven" role="tab" aria-controls="v-pills-seven" aria-selected="false">MLP</a>
-                                        <a class="nav-link" id="v-pills-eight-tab" data-toggle="pill" href="#v-pills-eight" role="tab" aria-controls="v-pills-eight" aria-selected="false">Random Forrest</a>
+                                        <a class="nav-link" id="v-pills-seven-tab" data-toggle="pill" href="#v-pills-seven" role="tab" aria-controls="v-pills-seven" aria-selected="false">Multi-layer Perceptron Regressor</a>
+                                        <a class="nav-link" id="v-pills-eight-tab" data-toggle="pill" href="#v-pills-eight" role="tab" aria-controls="v-pills-eight" aria-selected="false">Random Forest Regressor</a>
                                 </div>
                         </div>
                         <div class="col-9">
@@ -264,7 +254,9 @@
                                                                 </div>
                                                 </div>
                                                 <!-- <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt=""> -->
-                                                Naive Persistence model will forecast based on what it has seen. Prediction in Red. Actual in Blue.
+                                                <P>The simplest model that we could use to make predictions would be to persist the last observation.</P> 
+                                                <P>We can call this a persistence model and it provides a baseline of performance for the problem that we can use for comparison with an autoregression model.</P>
+                                                
                                         </div>
                                         
                                         <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab">
@@ -275,7 +267,10 @@
                                                         </div>
                                                 </div>
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt=""> -->
-                                                Improved prediction with autoregresssion model. Prediction in Red. Actual in Blue.
+                                                <p>An autoregression model is a linear regression model that uses only lagged variables as input variables.</p>
+                                                <p>The statsmodels library provides an autoregression model that automatically selects an appropriate lag value using statistical tests and trains a linear regression model.</p>
+                                                <p>We can use this model by first creating the model AR() and then calling fit() to train it on our dataset. 
+                                                We can use the model to make a prediction by calling the predict() function for a number of observations in the future.</p>
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab">
                                                 <div class="panel">
@@ -285,7 +280,11 @@
                                                         </div>
                                                 </div>  
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt=""> -->
-                                                Further improved prediction with autoregresssion model with history. Prediction in Red. Actual in Blue.
+                                                <p>The autoregresssion model with history uses the learned coefficients and uses the history of prior observations retrieved
+                                                from the model to come up with new forecasts.</p> 
+                                                <p>This  model uses a linear quadratic estimation (LQE), an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, 
+                                                and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe</p>
+                                                
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">         
                                                         <div class="panel">
@@ -295,7 +294,9 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt=""> -->
-                                                        Linear regression residual error
+                                                <p>In linear regression, the relationships are modeled using linear predictor functions whose unknown model parameters are estimated from the dataset.</p>
+                                                <p>Our explanatory variables (features):</p>
+                                                ["Price", "lag1", "peek1", "lag2", "peek2", "lag3", "peek3","lag4","peek4","lag5", "peek5","lag6", "peek6", "lag7", "peek7", "lag8", "peek8", "lag9", "peek9", "lag10","peek10", "lag11","peek11"]]</p>
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-seven" role="tabpanel" aria-labelledby="v-pills-seven-tab">         
                                                         <div class="panel">
@@ -305,7 +306,20 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/MLP_residual.png') }}" alt=""> -->
-                                                To be filled
+                                                <p>Multi-layer Perceptron (MLP) is a supervised learning algorithm that learns a function by training on a dataset.
+                                                The advantages of Multi-layer Perceptron are the capability to learn non-linear models and learn models in real-time (on-line learning) using partial_fit. 
+                                                The Class MLPRegressor implements a multi-layer perceptron (MLP) that trains using backpropagation with no activation function in the output layer. 
+                                                Therefore, it uses the square error as the loss function, and the output is a set of continuous values.</p>
+                                                <p>Results and hyperparameter choices for our dataset:</p>
+                                                <p>Training loss did not improve more than tol=0.000000 for two consecutive epochs.</p>
+                                                <p>MLPRegressor(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,
+                                                                       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+                                                                       hidden_layer_sizes=(20, 20), learning_rate='adaptive',
+                                                                       learning_rate_init=0.1, max_iter=1000, momentum=0.9,
+                                                                       nesterovs_momentum=True, power_t=0.5, random_state=0, shuffle=True,
+                                                                       solver='adam', tol=0.0, validation_fraction=0.1, verbose=2,
+                                                                       warm_start=False)</p>
+                                                
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-eight" role="tabpanel" aria-labelledby="v-pills-eight-tab">         
                                                         <div class="panel">
@@ -315,7 +329,34 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
-                                                        To be filled
+                                                        <p>Hyperparameter Tuning:</p>
+                                                        <P>We used the Scikit-Learn’s RandomizedSearchCV method and defined a grid of hyperparameter ranges, and randomly sampled from the grid, 
+                                                        performing K-Fold CV with each combination of values to optimize performance.</P>
+                                                        <p>Our parameter grid to sample from during fitting:</p>
+                                                        <p>Number of trees in random forest
+                                                        n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]</p>
+                                                        <p>Number of features to consider at every split
+                                                        max_features = ['auto', 'sqrt']</p>
+                                                        <p>Maximum number of levels in tree
+                                                        max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+                                                        max_depth.append(None)</p>
+                                                        <p>Minimum number of samples required to split a node
+                                                        min_samples_split = [2, 5, 10]</p>
+                                                        <p>Minimum number of samples required at each leaf node
+                                                        min_samples_leaf = [1, 2, 4]</p>
+                                                        <p>Method of selecting samples for training each tree
+                                                        bootstrap = [True, False]</p>
+                                                        <p> We used 3 fold cross validation and searched across 100 different combinations.</p>
+                                                        <p>Our best hyperparameters grid:</p>
+                                                        <p>param_grid = {
+                                                                'bootstrap': [True],
+                                                                'max_depth': [100],
+                                                                'max_features': ['auto'],
+                                                                'min_samples_leaf': [1],
+                                                                'min_samples_split': [2],
+                                                                'n_estimators': [800]
+                                                            }</p>
+                                                      
                                         </div>
                                                 
                                 </div>
@@ -441,14 +482,10 @@
                 <div class="row">
                 <div class="col-md-12">
                 <div class="jumbotron">
-                        <h5>Future Trend</h5>
-                        <p>
-                                MLP obtained the best model accuracy with the dataset.
-                        </p>
-                        <p>
-                               Predict solar energy consumption with this model
-                        
-                        </p>
+                        <h5><span class="category" style="color: #2e925b;">Future Trend</span></h5>
+                        <br>
+                        <p> We used the Multi-layer Perceptron Regressor - MLP model to project solar energy consumption a year ahead from April 2018 to March 2019.</p>
+                        <p></p>
                 </div>
                 </div>
                 </div>
@@ -458,7 +495,7 @@
                         <div class="container">
                                 <div class="col-md-12">
                                 <div class="container trend">     
-                                        <img src="{{ url_for('static', filename='images/timeserie.png') }}" alt="Future Trends image">
+                                        <img src="{{ url_for('static', filename='images/MLPpredict12.png') }}" alt="Future Trends image">
                                 </div>
                                 </div>
                         </div>
