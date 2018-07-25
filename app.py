@@ -3,6 +3,8 @@ import os
 import io
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler

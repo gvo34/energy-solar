@@ -17,3 +17,5 @@ statsmodels==0.8.0
 scikit-image==0.13.0
 scikit-learn==0.19.1
 seaborn==0.8
+ipython==6.1.0
+ipython-genutils==0.2.0
