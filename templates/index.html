@@ -209,70 +209,69 @@
                         <p>To identify the predictive model that best fits our time series, we leveraged a range of approaches, from the most simplistic to robust machine learning models.</p>
                         <p> We developed a test harness for the problem by splitting the observations into training and test sets,
                         where we can vary the window assigned to the test set as “unseen” data that we wish to predict.</p> 
-                        <p>Select your desired window size of the test set to forecast the Solar Energy Consumption and compare the results for six distinct models:</p> 
-                        <p>Persistence, Autoregression, Autoregression re-train, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor.</p>
-                        <div class="dropdown">
-                                <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown button
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenuselection">
-                                <a class="dropdown-item" href="#">12 months</a>
-                                <a class="dropdown-item" href="#">6 months</a>
-                                <a class="dropdown-item" href="#">24 months</a>
+                        <p>Select your desired window size of the test set to forecast the Solar Energy Consumption and obtain a prediction score to compare the results for the following five distinct models:</p> 
+                        <p>Autoregression, Autoregression re-train, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor.</p>
+                                <div class="dropdown">                               
+                                        <select class="btn btn-secondary dropdown-toggle" id="thedropdown" onchange="gethistory(this)">
+                                                <option class="dropdown-item" value="12">last 12 months</option>
+                                                <option class="dropdown-item" value="6">last 6 months</option>
+                                                <option class="dropdown-item" value="24">last 24 months</option>
+                                        </select>
                                 </div>
-                        </div> -->
-                        <select class="btn btn-secondary dropdown-toggle" id="thedropdown" onchange="gethistory(this)">
-                                <option class="dropdown-item" value="12">last 12 months</option>
-                                <option class="dropdown-item" value="6">last 6 months</option>
-                                <option class="dropdown-item" value="24">last 24 months</option>
-                        </select>
-                        </div>
                         </p>
+                        
                 </div>
                
                  
                 <div class="row">
                 <div class="col-md-12">
-                <div class="row">     
+                <div class="row models">     
                         <div class="col-3">
                                 <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">                                
-                                        <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Persistence</a>
-                                        <a class="nav-link" id="v-pills-five-tab" data-toggle="pill" href="#v-pills-five" role="tab" aria-controls="v-pills-five" aria-selected="false">Autoregression</a>
-                                        <a class="nav-link" id="v-pills-six-tab" data-toggle="pill" href="#v-pills-six" role="tab" aria-controls="v-pills-six" aria-selected="false">Autoregression w/retraining</a>
-                                        <a class="nav-link" id="v-pills-twor-tab" data-toggle="pill" href="#v-pills-twor" role="tab" aria-controls="v-pills-twor" aria-selected="false">Linear Regression</a>
-                                        <a class="nav-link" id="v-pills-seven-tab" data-toggle="pill" href="#v-pills-seven" role="tab" aria-controls="v-pills-seven" aria-selected="false">Multi-layer Perceptron Regressor</a>
-                                        <a class="nav-link" id="v-pills-eight-tab" data-toggle="pill" href="#v-pills-eight" role="tab" aria-controls="v-pills-eight" aria-selected="false">Random Forest Regressor</a>
+                                        <a class="nav-link " id="v-pills-persistence-tab" data-toggle="pill" href="#v-pills-persistence" role="tab" aria-controls="v-pills-persistence" aria-selected="false">Persistence (window=2)</a>
+                                        <a class="nav-link active" id="v-pills-AR-tab" data-toggle="pill" href="#v-pills-AR" role="tab" aria-controls="v-pills-AR" aria-selected="false">Autoregression</a>
+                                        <a class="nav-link" id="v-pills-ARH-tab" data-toggle="pill" href="#v-pills-ARH" role="tab" aria-controls="v-pills-ARH" aria-selected="false">Autoregression w/retraining</a>
+                                        <a class="nav-link" id="v-pills-LR-tab" data-toggle="pill" href="#v-pills-LR" role="tab" aria-controls="v-pills-LR" aria-selected="false">Linear Regression</a>
+                                        <a class="nav-link" id="v-pills-MLP-tab" data-toggle="pill" href="#v-pills-MLP" role="tab" aria-controls="v-pills-MLP" aria-selected="false">Multi-layer Perceptron Regressor</a>
+                                        <a class="nav-link" id="v-pills-RF-tab" data-toggle="pill" href="#v-pills-RF" role="tab" aria-controls="v-pills-RF" aria-selected="false">Random Forest Regressor</a>
                                 </div>
                         </div>
                         <div class="col-9">
                                 <div class="tab-content" id="v-pillsr-tabContent">
-                                        <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                        <div class="tab-pane fade " id="v-pills-persistence" role="tabpanel" aria-labelledby="v-pills-persistence-tab">
                                                 <div class="panel">
                                                                 <h5 class="panel-header">Prediction score:</h5>
                                                                 <div class="panel-body" style="border:solid;align-content:center">
-                                                                <span id="prediction_P">MSE: 13.598</span>
+                                                                <span id="prediction_P"> MSE: 13.598</span>
                                                                 </div>
                                                 </div>
                                                 <!-- <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt=""> -->
+                                                <ul>
                                                 <P>The simplest model that we could use to make predictions would be to persist the last observation.</P> 
                                                 <P>We can call this a persistence model and it provides a baseline of performance for the problem that we can use for comparison with an autoregression model.</P>
-                                                
+                                                <p> The Persistence model option is added only as reference and limited with a window size of 2 observations.</p>
+                                                </ul>
                                         </div>
                                         
-                                        <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab">
+                                        <div class="tab-pane fade show active" id="v-pills-AR" role="tabpanel" aria-labelledby="v-pills-AR-tab">
                                                 <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
-                                                        <span id="prediction_AR">MSE: 0.336</span>
+                                                        <span id="prediction_AR"> MSE: 0.336</span>
                                                         </div>
                                                 </div>
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt=""> -->
+                                                <ul>
                                                 <p>An autoregression model is a linear regression model that uses only lagged variables as input variables.</p>
                                                 <p>The statsmodels library provides an autoregression model that automatically selects an appropriate lag value using statistical tests and trains a linear regression model.</p>
-                                                <p>We can use this model by first creating the model AR() and then calling fit() to train it on our dataset. 
-                                                We can use the model to make a prediction by calling the predict() function for a number of observations in the future.</p>
+                                                <ol>This model allowed for: 
+                                                        <li>first creating the model AR() </li>
+                                                        <li>then call fit() to train it on our dataset.</li>                                                                 
+                                                        <li>Make a prediction by calling the predict() function for a number of observations in the future.</li>
+                                                </ol>
+                                                </ul>
                                         </div>
-                                        <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab">
+                                        <div class="tab-pane fade" id="v-pills-ARH" role="tabpanel" aria-labelledby="v-pills-ARH-tab">
                                                 <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
@@ -280,13 +279,17 @@
                                                         </div>
                                                 </div>  
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt=""> -->
-                                                <p>The autoregresssion model with history uses the learned coefficients and uses the history of prior observations retrieved
-                                                from the model to come up with new forecasts.</p> 
-                                                <p>This  model uses a linear quadratic estimation (LQE), an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, 
-                                                and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe</p>
-                                                
+                                                <ul>
+                                                <p> Using the AR model provided by the statsmodel library:</p>
+                                                <ul>
+                                                <li>The autoregresssion model with history uses the learned coefficients and uses the history of prior observations retrieved
+                                                from the model to come up with new forecasts.</li> 
+                                                <li>This  model uses a linear quadratic estimation (LQE), an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, 
+                                                and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe</li>
+                                                </ul>
+                                                </ul>
                                         </div>
-                                        <div class="tab-pane fade" id="v-pills-twor" role="tabpanel" aria-labelledby="v-pills-twor-tab">         
+                                        <div class="tab-pane fade" id="v-pills-LR" role="tabpanel" aria-labelledby="v-pills-LR-tab">         
                                                         <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
@@ -294,11 +297,14 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt=""> -->
-                                                <p>In linear regression, the relationships are modeled using linear predictor functions whose unknown model parameters are estimated from the dataset.</p>
-                                                <p>Our explanatory variables (features):</p>
-                                                ["Price", "lag1", "peek1", "lag2", "peek2", "lag3", "peek3","lag4","peek4","lag5", "peek5","lag6", "peek6", "lag7", "peek7", "lag8", "peek8", "lag9", "peek9", "lag10","peek10", "lag11","peek11"]]</p>
+                                                <ul>
+                                                        <p>In linear regression, the relationships are modeled using linear predictor functions whose unknown model parameters are estimated from the dataset.</p>
+                                                        <ul>Our explanatory variables (features):
+                                                        <li>["Price", "lag1", "peek1", "lag2", "peek2", "lag3", "peek3","lag4","peek4","lag5", "peek5","lag6", "peek6", "lag7", "peek7", "lag8", "peek8", "lag9", "peek9", "lag10","peek10", "lag11","peek11"]]</li>
+                                                        </ul>
+                                                </ul>
                                         </div>
-                                        <div class="tab-pane fade" id="v-pills-seven" role="tabpanel" aria-labelledby="v-pills-seven-tab">         
+                                        <div class="tab-pane fade" id="v-pills-MLP" role="tabpanel" aria-labelledby="v-pills-MLP-tab">         
                                                         <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
@@ -306,22 +312,29 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/MLP_residual.png') }}" alt=""> -->
-                                                <p>Multi-layer Perceptron (MLP) is a supervised learning algorithm that learns a function by training on a dataset.
+                                                <ul>
+                                                        <p>Multi-layer Perceptron (MLP) is a supervised learning algorithm that learns a function by training on a dataset.
                                                 The advantages of Multi-layer Perceptron are the capability to learn non-linear models and learn models in real-time (on-line learning) using partial_fit. 
                                                 The Class MLPRegressor implements a multi-layer perceptron (MLP) that trains using backpropagation with no activation function in the output layer. 
                                                 Therefore, it uses the square error as the loss function, and the output is a set of continuous values.</p>
-                                                <p>Results and hyperparameter choices for our dataset:</p>
-                                                <p>Training loss did not improve more than tol=0.000000 for two consecutive epochs.</p>
-                                                <p>MLPRegressor(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,
+                                                <ul>Results and hyperparameter choices for our dataset:
+
+                                                <li>Iteration count stopped under 60 with message: <small> Training loss did not improve more than tol=0.000000 for two consecutive epochs.</small></li>
+                                                <li><strong>Hyper-parameter values </strong> selected from reserched material with best approximations given with 
+                                                        <p><small>
+                                                        MLPRegressor(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,
                                                                        beta_2=0.999, early_stopping=False, epsilon=1e-08,
                                                                        hidden_layer_sizes=(20, 20), learning_rate='adaptive',
                                                                        learning_rate_init=0.1, max_iter=1000, momentum=0.9,
                                                                        nesterovs_momentum=True, power_t=0.5, random_state=0, shuffle=True,
                                                                        solver='adam', tol=0.0, validation_fraction=0.1, verbose=2,
-                                                                       warm_start=False)</p>
-                                                
+                                                                       warm_start=False)
+                                                                </small></p>
+                                                </li>
+                                                </ul>
+                                                </ul>
                                         </div>
-                                        <div class="tab-pane fade" id="v-pills-eight" role="tabpanel" aria-labelledby="v-pills-eight-tab">         
+                                        <div class="tab-pane fade" id="v-pills-RF" role="tabpanel" aria-labelledby="v-pills-RF-tab">         
                                                         <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
@@ -329,34 +342,37 @@
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
-                                                        <p>Hyperparameter Tuning:</p>
-                                                        <P>We used the Scikit-Learn’s RandomizedSearchCV method and defined a grid of hyperparameter ranges, and randomly sampled from the grid, 
+                                                        <ul>
+                                                        <p>For the Random Forrest Regressor model, we used the Scikit-Learn’s RandomizedSearchCV method and defined a grid of hyperparameter ranges, and randomly sampled from the grid, 
                                                         performing K-Fold CV with each combination of values to optimize performance.</P>
-                                                        <p>Our parameter grid to sample from during fitting:</p>
-                                                        <p>Number of trees in random forest
-                                                        n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]</p>
-                                                        <p>Number of features to consider at every split
-                                                        max_features = ['auto', 'sqrt']</p>
-                                                        <p>Maximum number of levels in tree
-                                                        max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
-                                                        max_depth.append(None)</p>
-                                                        <p>Minimum number of samples required to split a node
-                                                        min_samples_split = [2, 5, 10]</p>
-                                                        <p>Minimum number of samples required at each leaf node
-                                                        min_samples_leaf = [1, 2, 4]</p>
-                                                        <p>Method of selecting samples for training each tree
-                                                        bootstrap = [True, False]</p>
-                                                        <p> We used 3 fold cross validation and searched across 100 different combinations.</p>
-                                                        <p>Our best hyperparameters grid:</p>
-                                                        <p>param_grid = {
-                                                                'bootstrap': [True],
-                                                                'max_depth': [100],
-                                                                'max_features': ['auto'],
-                                                                'min_samples_leaf': [1],
-                                                                'min_samples_split': [2],
-                                                                'n_estimators': [800]
-                                                            }</p>
-                                                      
+                                                        <ul>Our parameter grid to sample from during fitting:
+                                                                <li>Number of trees in random forest
+                                                                n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]</li>
+                                                                <li>Number of features to consider at every split
+                                                                max_features = ['auto', 'sqrt']</li>
+                                                                <li>Maximum number of levels in tree
+                                                                max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+                                                                max_depth.append(None)</li>
+                                                                <li>Minimum number of samples required to split a node
+                                                                min_samples_split = [2, 5, 10]</li>
+                                                                <li>Minimum number of samples required at each leaf node
+                                                                min_samples_leaf = [1, 2, 4]</li>
+                                                                <li>Method of selecting samples for training each tree
+                                                                bootstrap = [True, False]</li>
+                                                                <li> We used 3 fold cross validation and searched across 100 different combinations.</li>
+                                                        </ul>
+                                                        <ul>
+                                                                <li><strong>Our best hyperparameters grid:</strong>
+                                                                <p>param_grid = {
+                                                                        'bootstrap': [True],
+                                                                        'max_depth': [100],
+                                                                        'max_features': ['auto'],
+                                                                        'min_samples_leaf': [1],
+                                                                        'min_samples_split': [2],
+                                                                        'n_estimators': [800]
+                                                                }</p></li>
+                                                        </ul>    
+                                                </ul>
                                         </div>
                                                 
                                 </div>

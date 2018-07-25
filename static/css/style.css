@@ -69,3 +69,7 @@ html, body
 .trend > img{
     margin:auto;
 }
+
+.models {
+    height:30em;
+}
