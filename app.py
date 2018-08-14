@@ -75,6 +75,18 @@ def split_scale_Xy(X, y, past_look):
     return X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled
 
 
+def create_plot(name, title, values, predictions):
+    plt.figure()
+    plt.title(title)
+    plt.plot(values, color='blue', marker='o', linestyle='dotted')
+    plt.plot(predictions, color='green', marker='x', linestyle='dotted')
+    plt.legend(['Solar Energy','Predictions'], loc='best')
+    # Save our graph 
+    namepath = "static/images/" + name + ".png"
+    plt.tight_layout()
+    plt.savefig(namepath)
+  
+
 # persistence model
 def model_persistence(x):
     return x
@@ -82,7 +94,9 @@ def model_persistence(x):
 
 @app.route('/Autoregression/<history>')
 def Autoregression(history):
-    print("Autoregression with past lookup of ", history)
+    title = "Autoregression with past lookup of "+ history + "months"
+    name = "ARmodel"+history
+    print(title)
     past_lookup = int(history)
     
     series = read_timeserie()
@@ -100,24 +114,19 @@ def Autoregression(history):
     for i in range(len(predictions)):
         print('predicted=%f, expected=%f' % (predictions[i], test_scaled[i]))
     MSE = mean_squared_error(test_scaled, predictions)
-    # plot results
-    plt.figure()
+    # plot result
+    create_plot(name, title, test_scaled, predictions) 
     
-    plt.plot(test_scaled)
-    plt.plot(predictions, color='red')
-    plt.legend(['Solar Energy','Predictions'], loc='best')
-    plt.title("Autoregression plot of " + history + " months")
-    
-    # Save our graph 
-    plt.tight_layout()
-    plt.savefig("static/images/ARmodel" + history+ ".png")
     score = {"MSE": MSE}
     print(" done AR ", score)
     return jsonify(score)
 
 @app.route('/ARHistory/<past>')
 def ARHistory(past):
-    print("Autoregression History with past lookup of ", past)
+    title = "Autoregression History with past lookup of "+ past
+    name = "ARmodel_history"+ past
+    print(title)
+
     past_lookup = int(past)
     
     series = read_timeserie()
@@ -146,17 +155,14 @@ def ARHistory(past):
         predictions.append(yhat)
         history.append(obs)
         print('predicted=%f, expected=%f' % (yhat, obs))
+    
     MSE = mean_squared_error(test_scaled, predictions)
     print('Test MSE: %.3f' % MSE)
-   # plot results
-    plt.figure()
-    plt.title("Autoregression with retraining plot of " + past + " months")
-    plt.plot(test_scaled)
-    plt.plot(predictions, color='red')
-    plt.legend(['Solar Energy','Predictions'], loc='best')
-    # Save our graph 
-    plt.tight_layout()
-    plt.savefig("static/images/ARmodel_history" + past+ ".png")
+
+    # plot result
+    create_plot(name, title, test_scaled, predictions) 
+    
+    # flask return value 
     score = {"MSE": MSE}
     print(" done ARHistory ", score)
     return jsonify(score)
@@ -164,7 +170,9 @@ def ARHistory(past):
 
 @app.route('/Linear/<history>')
 def Linear(history):
-    print("doing Linear with ", history)
+    title = "Linear Regression of "+ history+ "months"
+    name="LinearRmodel" + history
+    print(title)
 
     months = int(history)
     X, y = read_dataset()
@@ -181,14 +189,8 @@ def Linear(history):
     r2 = model.score(X_test_scaled, y_test_scaled)
     score_linear = {"r2": r2,"MSE": MSE}
     plt.figure()
-    # plot
-    plt.plot(y_test_scaled)
-    plt.plot(predictions, color='red')
-    plt.legend(['Solar Energy','Predictions'], loc='best')
-    # Save our graph 
-    plt.title("Linear Regression of " + history + " months")
-    plt.tight_layout()
-    plt.savefig("static/images/LinearRmodel" + history+ ".png")
+    # plot result
+    create_plot(name, title, y_test_scaled, predictions) 
     print("DONE LINEAR")
     print(score_linear)
     return jsonify(score_linear)
@@ -196,13 +198,15 @@ def Linear(history):
 
 @app.route('/MLP/<history>')
 def MLP(history):
+    title = "MLP of "+ history+ "months"
+    name = "MLPmodel"+ history
     print("doing MLP with ", history)
 
     months = int(history)
     X, y = read_dataset()
     
     
-    # split and train X and y
+    # split and scale X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
     
     mlp = MLPRegressor(max_iter=1000, learning_rate_init=0.1, random_state=0, learning_rate='adaptive',
@@ -214,16 +218,10 @@ def MLP(history):
     MSE = mean_squared_error(y_test_scaled, predictions)
     r2 = mlp.score(X_test_scaled, y_test_scaled)
 
-    # plot
-    plt.figure()
+    # reshape the values for plotting
     y_test_ravel = np.ravel(y_test_scaled)
-    plt.plot(y_test_ravel)
-    plt.plot(predictions, color='red')
-    plt.legend(['Solar Energy','Predictions'], loc='best')
-    plt.title("MLP of " + history + " months")
-    # Save our graph 
-    plt.tight_layout()
-    plt.savefig("static/images/MLPmodel"+ history +".png")
+    # plot result
+    create_plot(name, title, y_test_ravel, predictions) 
 
     print(f"MSE: {MSE}, r2: {r2}")
     score = {"r2": r2,"MSE": MSE}
@@ -232,14 +230,15 @@ def MLP(history):
 
 @app.route('/RF/<history>')
 def RandomForrest(history):
+    title = "RF with "+ history + "months"
+    name = "RFmodel"+history
+
     print("doing Random Forrest with ", history)
 
     months = int(history)
     X, y = read_dataset()
-
-   
     
-    # split and train X and y
+    # split and scale X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
 
     # results from RandomForrest RandomizedSearchCV call    
@@ -253,16 +252,65 @@ def RandomForrest(history):
     y_test_ravel = np.ravel(y_test_scaled)
     MSE = mean_squared_error(y_test_ravel, predictions)
     r2 = rf.score(X_test_scaled, y_test_ravel)
+    # plot result
+    create_plot(name, title, y_test_ravel, predictions) 
+    print(f"MSE: {MSE}, r2: {r2}")
+    score = {"r2": r2,"MSE": MSE}
+    return jsonify(score)
 
-    plt.figure()
-    plt.plot(y_test_ravel, color='blue')
-    plt.plot(predictions, color='red')
-    plt.legend(['Solar Energy','Predictions'], loc='best')
-    plt.title("Random Forrest of " + history + " months")
-    # Save our graph 
-    plt.tight_layout()
-    plt.savefig("static/images/RFmodel"+ history +".png")
 
+@app.route('/RFfuzzy/<history>')
+def RFfuzzy(history):
+    title = "RF fuzzy with "+ history + "months"
+    name = "RFmodel"+history
+
+    print(title)
+
+    months = int(history)
+    # Read dataset as output from previous models: AR, LR, MLP
+
+    filename = "datafuzz.csv"
+    output_data = "static/data/output" 
+    filepath = os.path.join(output_data,filename)
+    data = pd.read_csv(filepath,index_col=False, header=0)
+    X = data[["AR", "LR", "MLP"]] 
+    y = data["Solar"].values.reshape(-1, 1)
+    print(X.shape, y.shape)
+
+    # split and train X and y
+    X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
+
+    # Grid Search to obtain best params from values ranges in:
+        # 'bootstrap': [True, False],
+        # 'max_depth': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, None],
+        # 'max_features': ['auto', 'sqrt'],
+        # 'min_samples_leaf': [1, 2, 4],
+        # 'min_samples_split': [2, 5, 10],
+        # 'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
+    # best params:
+            # 'bootstrap': False,
+            # 'max_depth': 100,
+            # 'max_features': 'auto',
+            # 'min_samples_leaf': 4,
+            # 'min_samples_split': 10,
+            # 'n_estimators': 2000
+    
+    # results from RandomForrest RandomizedSearchCV call    
+    #rf = RandomForestRegressor(bootstrap=False,max_depth=100,max_features="auto",min_samples_leaf=4,min_samples_split=10,n_estimators=2000)
+    #y_train_ravel = np.ravel(y_train_scaled)
+    #rf.fit(X_train_scaled, y_train_ravel)
+    y_test_ravel = np.ravel(y_test_scaled)
+    
+    rf = RandomForestRegressor(n_estimators = 10, random_state = 42)
+    rf.fit(X_test_scaled, y_test_ravel)
+    
+    predictions = rf.predict(X_test_scaled)
+
+    MSE = mean_squared_error(y_test_ravel, predictions)
+    r2 = rf.score(X_test_scaled, y_test_ravel)
+
+    # plot result
+    create_plot(name, title, y_test_ravel, predictions) 
     print(f"MSE: {MSE}, r2: {r2}")
     score = {"r2": r2,"MSE": MSE}
     return jsonify(score)

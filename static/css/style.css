@@ -6,8 +6,8 @@
 
   
 img{
-    height:90%;
-    align-content: center;
+    height:100%;
+    align-content: left;
 }
 
 /* set map, body, and html to 100% of the screen size */

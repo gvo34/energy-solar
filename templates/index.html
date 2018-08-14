@@ -21,16 +21,16 @@
             <div class="col-md-12">
             <div class="jumbotron text-center">
                     <strong><h1><span class="category" style="color: #2e925b;">Forecast of Renewable Energy Consumption</span></h1></strong>
-                    <h4>Insight into Solar</h4>
-
+                    <h5>Insight into Solar - 
+                    Exploration into Monthly Solar Energy using four distinct techniques:</h5>
+                    <p>Autoregression, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor</p>
           
             </div>
             </div>
         </div>
         <div class="row">
         <div class="col-md-12">
-                <h4> Exploration into Monthly Solar Energy using four distinct techniques:</h4>
-                <p>Autoregression, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor</p>
+               
                         
             <hr>    
             <p>
@@ -65,37 +65,49 @@
           <div class=jumbotron>
                 <h5><span class="category" style="color: #2e925b;">Time Serie Exploration</span></h5>
                 <br>
-                <p> We explored the correlation of our solar engery consumption to determine the relationship between the observation and its historic values over time.</p>
-                <p>This provided a threshold for selecting more relevant lag values for prediction.</p>
+                
+                <div class="container">
+                        <div class="row">
+                                <div class="col-md-12">
+                <img style="float:left;margin-right:10px" src="{{ url_for('static', filename='images/timeserie.png') }}" alt="">
+                <p class="category">The dataset is a time serie of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
+                <p class="category">The units are in trillion BTU and there are 351 observations.</p>
+                                </div>
+                        </div>
+                </div>
+                <br>
+
+                <p class="category">Since 2008, hundreds of thousands of solar panels have popped up across the country as an increasing number of Americans choose to power their daily lives with the sun’s energy. 
+                The Solar Energy Technologies Office invests in innovative research efforts to lower solar electricity costs every year.</p>
+                <p> We explored the correlation of our solar engery consumption to determine the relationship between the observation and its historic values over time, providing a threshold for selecting more relevant lag values for prediction.</p>
 
            </div>
            <div class="row">
                 <div class="col-3">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Time serie</a>
-                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Decomposition</a>
+                                <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Decomposition</a>
                                 <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two" role="tab" aria-controls="v-pills-two" aria-selected="false">Lag Plot</a>
                                 <a class="nav-link" id="v-pills-three-tab" data-toggle="pill" href="#v-pills-three" role="tab" aria-controls="v-pills-three" aria-selected="false">Autocorrelation</a>
+                                 <a class="nav-link" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Autocorrelation with lag</a>
                         </div>
                 </div>
                 <div class="col-9">
                         <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
+                                
+                                
 
-                                        <img src="{{ url_for('static', filename='images/timeserie.png') }}" alt="">
-                                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
-                                        <p class="category">The units are in trillion BTU and there are 351 observations.</p>
-                                        <p class="category">Since 2008, hundreds of thousands of solar panels have popped up across the country as an increasing number of Americans choose to power their daily lives with the sun’s energy. 
-                                        The Solar Energy Technologies Office invests in innovative research efforts to lower solar electricity costs every year.</p>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
                                         <img src="{{ url_for('static', filename='images/Decomposetimeserie.png') }}" alt="Decomposition">
                                         <p class="category">We aplied a multiplicative <i>seasonal_decompose()</i> function from the statsmodels library to best capture each component of the Residential Solar Energy Consumption.</p>
-                                        <p class="category">Time series decomposition involves thinking of a series as a combination of LEVEL: <i>The average value in the series</i>, 
-                                                TREND: <i>The increasing or decreasing value in the series</i>, SEASONALITY: <i>The repeating short-term cycle in the series</i>, 
-                                                and NOISE: <i>The random variation in the series</i>.</p>
-                                       
-
+                                        <p class="category">Time series decomposition involves thinking of a series as a combination of 
+                                                <ul>
+                                                <li>LEVEL: <i>The average value in the series</i>, </li>
+                                                <li>TREND: <i>The increasing or decreasing value in the series</i>,</li> 
+                                                <li>SEASONALITY: <i>The repeating short-term cycle in the series</i>, </li>
+                                                <li>NOISE: <i>The random variation in the series</i>.</li>
+                                                </ul>
+                                        </p>
+                                        
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
                                                 <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
@@ -107,12 +119,17 @@
                                         </div>
                                         
                                 <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
-                                        <img src="{{ url_for('static', filename='images/timeseriesautocorrelation.png') }}" alt="">
+                                        <img src="{{ url_for('static', filename='images/autocorr.png') }}" alt="">
                                         <p class="category">We plot the correlation coefficient for each lag variable, which shows the relationship between the observation and its historic values over time.
-                                        The plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
-                                        The plot also includes solid and dashed lines that indicate the 95% and 99% confidence intervals for the correlation values. 
+                                        The plot includes solid and dashed lines that indicate the 95% and 99% confidence intervals for the correlation values. 
                                         Correlation values above these lines are more significant than those below the line.</p>
 
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
+                                        <img src="{{ url_for('static', filename='images/acf.png') }}" alt="">
+                                        <p class="category">A different view of the correlation coefficient for each lag variable shown over a period of 12 observations.
+                                                        This plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
+                                                        </p>
                                 </div>
                                 
                         </div>
@@ -254,7 +271,7 @@
                                         <a class="nav-link" id="v-pills-ARH-tab" data-toggle="pill" href="#v-pills-ARH" role="tab" aria-controls="v-pills-ARH" aria-selected="false">Autoregression w/retraining</a>
                                         <a class="nav-link" id="v-pills-LR-tab" data-toggle="pill" href="#v-pills-LR" role="tab" aria-controls="v-pills-LR" aria-selected="false">Linear Regression</a>
                                         <a class="nav-link" id="v-pills-MLP-tab" data-toggle="pill" href="#v-pills-MLP" role="tab" aria-controls="v-pills-MLP" aria-selected="false">Multi-layer Perceptron Regressor</a>
-                                        <a class="nav-link" id="v-pills-RF-tab" data-toggle="pill" href="#v-pills-RF" role="tab" aria-controls="v-pills-RF" aria-selected="false">Random Forest Regressor</a>
+                                        <a class="nav-link" id="v-pills-RF-tab" data-toggle="pill" href="#v-pills-RF" role="tab" aria-controls="v-pills-RF" aria-selected="false">Random Forest Fuzzy</a>
                                 </div>
                         </div>
                         <div class="col-9">
@@ -385,44 +402,22 @@
                                                         <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
-                                                        <span id="prediction_RF">MSE: 2.2264382362478736 r2: -0.1444392049882004</span>
+                                                        <span id="prediction_RF">MSE: 0.02136696865934229 r2: 0.9890278956098904</span>
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
                                                         <ul>
-                                                        <p>For the Random Forrest Regressor model, we used the Scikit-Learn’s RandomizedSearchCV method and defined a grid of hyperparameter ranges, and randomly sampled from the grid, 
-                                                        performing K-Fold CV with each combination of values to optimize performance.</P>
-                                                        <ul>Our parameter grid to sample from during fitting:
-                                                                <li>Number of trees in random forest
-                                                                n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]</li>
-                                                                <li>Number of features to consider at every split
-                                                                max_features = ['auto', 'sqrt']</li>
-                                                                <li>Maximum number of levels in tree
-                                                                max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
-                                                                max_depth.append(None)</li>
-                                                                <li>Minimum number of samples required to split a node
-                                                                min_samples_split = [2, 5, 10]</li>
-                                                                <li>Minimum number of samples required at each leaf node
-                                                                min_samples_leaf = [1, 2, 4]</li>
-                                                                <li>Method of selecting samples for training each tree
-                                                                bootstrap = [True, False]</li>
-                                                                <li> We used 3 fold cross validation and searched across 100 different combinations.</li>
-                                                        </ul>
+                                                        <p>For the Random Forrest Regressor model, we combined the predictions results obtained with the other models (AR, LR, and MLP) as 
+                                                                input features into Random Forrest basic model</p>
+
+                                                                
                                                         <ul>
-                                                                <li><strong>Our best hyperparameters grid:</strong>
-                                                                <p>param_grid = {
-                                                                        'bootstrap': [True],
-                                                                        'max_depth': [100],
-                                                                        'max_features': ['auto'],
-                                                                        'min_samples_leaf': [1],
-                                                                        'min_samples_split': [2],
-                                                                        'n_estimators': [800]
-                                                                }</p></li>
+                                                                <li>n_estimators = 10</li>
                                                         </ul>    
                                                         <ul>
                                                                         <p> 
-                                                                                Details in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/RANDOMForrest_model_3.ipynb">
-                                                                                        RANDOMForrest_model
+                                                                                Further exploration with random grid search for best hyperparameters in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/RANDOMForrest_model_fuzzy.ipynb">
+                                                                                        RANDOMForrest_model_fuzzy
                                                                                 </a>
                         
                                                                                 </p>
@@ -550,44 +545,44 @@
         <div class="container">
         <div class="col-md-12"> 
 
-<div id="ae7178d7-777a-4fa2-9524-1158d5bdb517" style="width: 100%; height: 100%;" class="plotly-graph-div"></div>
-<script type="text/javascript">
-    (function(){
-        window.PLOTLYENV={'BASE_URL': 'https://plot.ly'};
+        <div id="ae7178d7-777a-4fa2-9524-1158d5bdb517" style="width: 100%; height: 100%;" class="plotly-graph-div"></div>
+        <script type="text/javascript">
+        (function(){
+                window.PLOTLYENV={'BASE_URL': 'https://plot.ly'};
 
-        var gd = document.getElementById('ae7178d7-777a-4fa2-9524-1158d5bdb517')
-        var resizeDebounce = null;
+                var gd = document.getElementById('ae7178d7-777a-4fa2-9524-1158d5bdb517')
+                var resizeDebounce = null;
 
-        function resizePlot() {
-            var bb = gd.getBoundingClientRect();
-            Plotly.relayout(gd, {
-                width: bb.width,
-                height: bb.height
-            });
-        }
+                function resizePlot() {
+                var bb = gd.getBoundingClientRect();
+                Plotly.relayout(gd, {
+                        width: bb.width,
+                        height: bb.height
+                });
+                }
 
-        
-        window.addEventListener('resize', function() {
-            if (resizeDebounce) {
-                window.clearTimeout(resizeDebounce);
-            }
-            resizeDebounce = window.setTimeout(resizePlot, 100);
-        });
-        
+                
+                window.addEventListener('resize', function() {
+                if (resizeDebounce) {
+                        window.clearTimeout(resizeDebounce);
+                }
+                resizeDebounce = window.setTimeout(resizePlot, 100);
+                });
+                
 
-        
-        Plotly.plot(gd,  {
-            data: figure.data,
-            layout: figure.layout,
-            frames: figure.frames,
-            config: {"mapboxAccessToken": "pk.eyJ1IjoiY2hyaWRkeXAiLCJhIjoiY2lxMnVvdm5iMDA4dnhsbTQ5aHJzcGs0MyJ9.X9o_rzNLNesDxdra4neC_A", "linkText": "Export to plot.ly", "showLink": true}
-        });
-        
-   }());
-</script>
+                
+                Plotly.plot(gd,  {
+                data: figure.data,
+                layout: figure.layout,
+                frames: figure.frames,
+                config: {"mapboxAccessToken": "pk.eyJ1IjoiY2hyaWRkeXAiLCJhIjoiY2lxMnVvdm5iMDA4dnhsbTQ5aHJzcGs0MyJ9.X9o_rzNLNesDxdra4neC_A", "linkText": "Export to plot.ly", "showLink": true}
+                });
+                
+        }());
+        </script>
 
-</div>             
-</div>
+        </div>             
+        </div>
 </div>
 <hr>
         <!-- Future trend -->
@@ -596,25 +591,32 @@
                 <div class="jumbotron">
                         <h5><span class="category" style="color: #2e925b;">Future Trend</span></h5>
                         <br>
-                        <p> To be able to forecast using a model that has peek data as input, we prepared the input data taking an assumption that the future (peek) dates
-                                would match the same dates as they were in the previous window of observations (12 months).  </p>
-                        <p> We used the Multi-layer Perceptron Regressor - MLP model to project solar energy consumption a year ahead from April 2018 to March 2019.</p>
+                        <p> Using a model that requires as input feature "unseen" data, we can make assumptions to feed input data based on previous observations. For example, to be able to forecast 
+                                using MLP with peek data as input, we prepared the input data similar to the test data with a repeated instance of the data to fill in the peek dates, this is, make an assumption 
+                                that same observations will be repeated into the future as they were in the immediate previous window of observations. </p>
+                        <p> With a window of 12 observations (a years worth) the MLP model to project solar energy consumption a year ahead from April 2018 to March 2019 is shown:</p>
                         <p></p>
+                        <div class="row">
+                                        <div class="container">
+                                                <div class="col-md-12">
+                                                <div class="container trend">     
+                                                        <img src="{{ url_for('static', filename='images/MLPpredict12.png') }}" alt="Future Trends image">
+                                                        <img src="{{ url_for('static', filename='images/MLPpredict12latest.png') }}" alt="Future Trends latest">
+                                                </div>
+                                                </div>
+                                        </div>
+                                </div>    
                 </div>
                 </div>
                 </div>
                       
-                        
-                <div class="row">
-                        <div class="container">
-                                <div class="col-md-12">
-                                <div class="container trend">     
-                                        <img src="{{ url_for('static', filename='images/MLPpredict12.png') }}" alt="Future Trends image">
-                                        <img src="{{ url_for('static', filename='images/MLPpredict12latest.png') }}" alt="Future Trends latest">
-                                </div>
-                                </div>
-                        </div>
-                </div>    
+<hr>         
+
+ <!-- Future trend with Random Forrest Fuzzy -->
+
+<!-- PLOTLY -->
+
+
         </div>
         </div>
 
