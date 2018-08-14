@@ -29,6 +29,11 @@ def read_dataset():
     filepath = os.path.join(output_data,filename)
     y = pd.read_csv(filepath,index_col=False, names=["Value"])
     print("X ", X.columns)
+    # overfitting treatment 
+    X = X.drop(columns=["lag12", "peek12"])
+    print("X ", X.columns)
+    
+
     return X, y
 
 def read_timeserie():
@@ -164,8 +169,7 @@ def Linear(history):
     months = int(history)
     X, y = read_dataset()
 
-    # overfitting treatment 
-    X = X.drop(columns=["lag12", "peek12"])
+    
 
     # split and train X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
@@ -196,8 +200,7 @@ def MLP(history):
 
     months = int(history)
     X, y = read_dataset()
-    # overfitting treatment 
-    X = X.drop(columns=["lag12", "peek12"])
+    
     
     # split and train X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)
@@ -234,8 +237,7 @@ def RandomForrest(history):
     months = int(history)
     X, y = read_dataset()
 
-    # overfitting treatment 
-    X = X.drop(columns=["lag12", "peek12"])
+   
     
     # split and train X and y
     X_train_scaled, y_train_scaled, X_test_scaled, y_test_scaled = split_scale_Xy(X, y, months)

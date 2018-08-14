@@ -207,11 +207,32 @@
                 <div class="jumbotron">
                         <h5><span class="category" style="color: #2e925b;">Forecast</span></h5>
                         <br>
-                        <p>To identify the predictive model that best fits our time series, we leveraged a range of approaches, from the most simplistic to robust machine learning models.</p>
-                        <p> We developed a test harness for the problem by splitting the observations into training and test sets,
-                        where we can vary the window assigned to the test set as “unseen” data that we wish to predict.</p> 
-                        <p>Select your desired window size of the test set to forecast the Solar Energy Consumption and obtain a prediction score to compare the results for the following five distinct models:</p> 
-                        <p>Autoregression, Autoregression re-train, Linear Regression, Multi-layer Perceptron Regressor, and Random Forest Regressor.</p>
+
+                        <p>To identify the predictive model that best fits our time serie, we leveraged a range of approaches, from the most simplistic to robust machine learning models.</p>
+                       
+
+
+
+                        <p> For the purpose of training the model, a test harness is developed for the problem by splitting the time serie observations into a training and a test set, 
+                                where we can treat the test set as “unseen” data that we wish to predict.</p> 
+                             
+                       <div class="container">
+                        <div class="row">
+                                <div class="col-md-12">
+                                <img style="float:left;margin-right:5px" src="{{ url_for('static', filename='images/model_persistence.png') }}" alt="">
+                                <p>The simplest model that we could use to make predictions would be to persist the last observation. </p>
+                                <p>We call this a persistence model and it provides a baseline of performance for the problem that we can use for comparison with other model. </p>
+                                <p>With only the last two observations in the dataset assigned to the test set (as “unseen” data that we wish to predict) we obtain predicted values that are a bit far from the real data, also a rather larger than ideal MSE of 1.376 (after scaled values)
+                                </p>
+                                </div>
+                        </div>           
+                        </div>
+                       <br>
+                        <p>Using other models we explore how they approximate the time serie dataset. We focused on well known time serie statistical models such as Autoregression as well as Machine Learning models such as Linear Regression, Multi-layer Perceptron (MLP) Regressor, and Random Forest Regressor.</p>
+                                In addition, we offer the opportunity to interact with the model training phase by allowing to choose the test dataset size that refers to the number of "unseen" observations to be used as test data. Note that the larger the test data the smaller the training data. 
+                                By using the dropdown menu selection, the window for the test data is defined. At each selection all models are re-trained in the background and the prediction score is regenerated and displayed (using MSE or r2/sqared. By selecting the tab associated to each model 
+                                you can easily compare the results obtained for the score of each distinct model and the given test window.</p> 
+                        
                                 <div class="dropdown">                               
                                         <select class="btn btn-secondary dropdown-toggle" id="thedropdown" onchange="gethistory(this)">
                                                 <option class="dropdown-item" value="12">last 12 months</option>
@@ -229,7 +250,6 @@
                 <div class="row models">     
                         <div class="col-3">
                                 <div class="nav flex-column nav-pills" id="v-pillsr-tab" role="tablist" aria-orientation="vertical">                                
-                                        <a class="nav-link " id="v-pills-persistence-tab" data-toggle="pill" href="#v-pills-persistence" role="tab" aria-controls="v-pills-persistence" aria-selected="false">Persistence (window=2)</a>
                                         <a class="nav-link active" id="v-pills-AR-tab" data-toggle="pill" href="#v-pills-AR" role="tab" aria-controls="v-pills-AR" aria-selected="false">Autoregression</a>
                                         <a class="nav-link" id="v-pills-ARH-tab" data-toggle="pill" href="#v-pills-ARH" role="tab" aria-controls="v-pills-ARH" aria-selected="false">Autoregression w/retraining</a>
                                         <a class="nav-link" id="v-pills-LR-tab" data-toggle="pill" href="#v-pills-LR" role="tab" aria-controls="v-pills-LR" aria-selected="false">Linear Regression</a>
@@ -239,20 +259,6 @@
                         </div>
                         <div class="col-9">
                                 <div class="tab-content" id="v-pillsr-tabContent">
-                                        <div class="tab-pane fade " id="v-pills-persistence" role="tabpanel" aria-labelledby="v-pills-persistence-tab">
-                                                <div class="panel">
-                                                                <h5 class="panel-header">Prediction score:</h5>
-                                                                <div class="panel-body" style="border:solid;align-content:center">
-                                                                <span id="prediction_P"> MSE: 13.598</span>
-                                                                </div>
-                                                </div>
-                                                <!-- <img src="{{ url_for('static', filename='images/model_persistence.png') }}" alt=""> -->
-                                                <ul>
-                                                <P>The simplest model that we could use to make predictions would be to persist the last observation.</P> 
-                                                <P>We can call this a persistence model and it provides a baseline of performance for the problem that we can use for comparison with an autoregression model.</P>
-                                                <p> The Persistence model option is added only as reference and limited with a window size of 2 observations.</p>
-                                                </ul>
-                                        </div>
                                         
                                         <div class="tab-pane fade show active" id="v-pills-AR" role="tabpanel" aria-labelledby="v-pills-AR-tab">
                                                 <div class="panel">
@@ -263,21 +269,21 @@
                                                 </div>
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel.png') }}" alt=""> -->
                                                 <ul>
-                                                <p>An autoregression model is a linear regression model that uses only lagged variables as input variables.</p>
-                                                <p>The statsmodels library provides an autoregression model that automatically selects an appropriate lag value using statistical tests and trains a linear regression model.</p>
-                                                <ol>This model allowed for: 
-                                                        <li>first creating the model AR() </li>
-                                                        <li>then call fit() to train it on our dataset.</li>                                                                 
-                                                        <li>Make a prediction by calling the predict() function for a number of observations in the future.</li>
-                                                </ol>
-                                                <ul>
-                                                <p> 
-                                                        Details in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/AR_model.ipynb">
-                                                                AR_model
-                                                        </a>
+                                                        <p>An autoregression model is a linear regression model that uses only lagged variables as input variables.</p>
+                                                        <p>The statsmodels library provides an autoregression model that automatically selects an appropriate lag value using statistical tests and trains a linear regression model.</p>
+                                                        <ol>This model allowed for: 
+                                                                <li>first creating the model AR() </li>
+                                                                <li>then call fit() to train it on our dataset.</li>                                                                 
+                                                                <li>Make a prediction by calling the predict() function for a number of observations in the future.</li>
+                                                        </ol>
+                                                        <ul>
+                                                                <p> 
+                                                                        Details in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/AR_model.ipynb">
+                                                                                AR_model
+                                                                        </a>
 
-                                                        </p>
-                                                </ul>
+                                                                        </p>
+                                                        </ul>
                                                 </ul>
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-ARH" role="tabpanel" aria-labelledby="v-pills-ARH-tab">
@@ -289,22 +295,22 @@
                                                 </div>  
                                                 <!-- <img src="{{ url_for('static', filename='images/ARmodel_history.png') }}" alt=""> -->
                                                 <ul>
-                                                <p> Using the AR model provided by the statsmodel library:</p>
-                                                <ul>
-                                                <li>The autoregresssion model with history uses the learned coefficients and uses the history of prior observations retrieved
-                                                from the model to come up with new forecasts.</li> 
-                                                <li>This  model uses a linear quadratic estimation (LQE), an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, 
-                                                and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe</li>
-                                                </ul>
+                                                        <p> Using the AR model provided by the statsmodel library:</p>
+                                                        <ul>
+                                                                <li>The autoregresssion model with history uses the learned coefficients and uses the history of prior observations retrieved
+                                                                from the model to come up with new forecasts.</li> 
+                                                                <li>This  model uses a linear quadratic estimation (LQE), an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, 
+                                                                and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe</li>
+                                                        </ul>
 
-                                                <ul>
-                                                                <p> 
+                                                                <ul>
+                                                                        <p> 
                                                                         Details in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/AR_model.ipynb">
                                                                                 AR_model
                                                                         </a>
                 
                                                                         </p>
-                                                                </ul
+                                                                </ul>
 
                                                 </ul>
                                         </div>
@@ -312,7 +318,7 @@
                                                         <div class="panel">
                                                         <h5 class="panel-header">Prediction score:</h5>
                                                         <div class="panel-body" style="border:solid;align-content:center">
-                                                        <span id="prediction_LR">MSE: 0.10041120657022053, R2: 0.9483863870336732</span>
+                                                        <span id="prediction_LR">MSE: 0.10041120657022053, r2: 0.9483863870336732</span>
                                                         </div>
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/LR_residual.png') }}" alt=""> -->
@@ -329,7 +335,7 @@
                                                                                 </a>
                         
                                                                                 </p>
-                                                                        </ul
+                                                                        </ul>
 
 
                                                 </ul>
@@ -370,7 +376,7 @@
                                                                         </a>
                 
                                                                         </p>
-                                                                </ul
+                                                                </ul>
 
 
                                                 </ul>
@@ -420,7 +426,7 @@
                                                                                 </a>
                         
                                                                                 </p>
-                                                                        </ul
+                                                                        </ul>
                                                 
                                                 
                                                 
