@@ -539,11 +539,56 @@
         </div>
 <hr>
 
-<h5 style="text-align: center">All models</h5>
+<h5 style="text-align: center">Model Comparison</h5>
 
-     <img style="height:10%" id="LRimg" src="{{ url_for('static', filename='images/Distint_models.png') }}" alt=""> 
+<script type="text/javascript" src="static/js/plotlyjs-bundle.js"></script>
+            
+            
+<script type="text/javascript" src="static/js/figure.js"></script>
 
+<div class="row">
+        <div class="container">
+        <div class="col-md-12"> 
 
+<div id="ae7178d7-777a-4fa2-9524-1158d5bdb517" style="width: 100%; height: 100%;" class="plotly-graph-div"></div>
+<script type="text/javascript">
+    (function(){
+        window.PLOTLYENV={'BASE_URL': 'https://plot.ly'};
+
+        var gd = document.getElementById('ae7178d7-777a-4fa2-9524-1158d5bdb517')
+        var resizeDebounce = null;
+
+        function resizePlot() {
+            var bb = gd.getBoundingClientRect();
+            Plotly.relayout(gd, {
+                width: bb.width,
+                height: bb.height
+            });
+        }
+
+        
+        window.addEventListener('resize', function() {
+            if (resizeDebounce) {
+                window.clearTimeout(resizeDebounce);
+            }
+            resizeDebounce = window.setTimeout(resizePlot, 100);
+        });
+        
+
+        
+        Plotly.plot(gd,  {
+            data: figure.data,
+            layout: figure.layout,
+            frames: figure.frames,
+            config: {"mapboxAccessToken": "pk.eyJ1IjoiY2hyaWRkeXAiLCJhIjoiY2lxMnVvdm5iMDA4dnhsbTQ5aHJzcGs0MyJ9.X9o_rzNLNesDxdra4neC_A", "linkText": "Export to plot.ly", "showLink": true}
+        });
+        
+   }());
+</script>
+
+</div>             
+</div>
+</div>
 <hr>
         <!-- Future trend -->
                 <div class="row">
