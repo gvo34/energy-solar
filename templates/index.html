@@ -63,7 +63,7 @@
         <div class="row">
         <div class="col-md-12">
           <div class=jumbotron>
-                <h5><span class="category" style="color: #2e925b;">Time Serie Exploration</span></h5>
+                <h5><span class="category" style="color: #2e925b;">Time Series Exploration</span></h5>
                 <br>
 
                 <div class="container">
@@ -115,7 +115,7 @@
                                                                         </div>             
                                                         </div>
                                                         </div>
-                        <p class="category">The dataset is a time serie of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
+                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
                         <p class="category">The units are in trillion BTU and there are 351 observations.</p>
                                         </div>
                                 </div>
@@ -279,7 +279,7 @@
 
 
 
-                        <p> For the purpose of training the model, a test harness is developed for the problem by splitting the time serie observations into a training and a test set, 
+                        <p> For the purpose of training the model, a test harness is developed for the problem by splitting the time series observations into a training and a test set, 
                                 where we can treat the test set as “unseen” data that we wish to predict.</p> 
                              
                        <div class="container">
@@ -294,7 +294,7 @@
                         </div>           
                         </div>
                        <br>
-                        <p>Using other models we explore how they approximate the time serie dataset. We focused on well known time serie statistical models such as Autoregression as well as Machine Learning models such as Linear Regression, Multi-layer Perceptron (MLP) Regressor, and Random Forest Regressor.</p>
+                        <p>Using other models we explore how they approximate the time series dataset. We focused on well known time serie statistical models such as Autoregression as well as Machine Learning models such as Linear Regression, Multi-layer Perceptron (MLP) Regressor, and Random Forest Regressor.</p>
                                 In addition, we offer the opportunity to interact with the model training phase by allowing to choose the test dataset size that refers to the number of "unseen" observations to be used as test data. Note that the larger the test data the smaller the training data. 
                                 By using the dropdown menu selection, the window for the test data is defined. At each selection all models are re-trained in the background and the prediction score is regenerated and displayed (using MSE or r2/sqared. By selecting the tab associated to each model 
                                 you can easily compare the results obtained for the score of each distinct model and the given test window.</p> 
@@ -456,25 +456,24 @@
                                                         </div>      
                                                         <!-- <img id="LRimg" src="{{ url_for('static', filename='images/RF_residual.png') }}" alt=""> -->
                                                         <ul>
-                                                        <p>For the Random Forrest Regressor model, we combined the predictions results obtained with the other models (AR, LR, and MLP) as 
-                                                                input features into Random Forrest basic model</p>
-
-                                                                
-                                                        <ul>
-                                                                <li>n_estimators = 10</li>
-                                                        </ul>    
+                                                        <p>Recent results in machine learning show that the performance of the final model can be improved not by choosing the model 
+                                                        structure which is expected to predict the best but by creating a model whose output is the combination of the output of models 
+                                                        having different structures. </p>
+                                                        <p>For the Random Forrest Regressor model, we combined the predictions results obtained with the other models Autoregression (AR), Linear Regression (LR), Multi-layer Perceptron Regressor (MLP) as 
+                                                        input features into the Random Forrest Regressor (RF).</p>
+        
                                                         <ul>
                                                                         <p> 
-                                                                                Further exploration with random grid search for best hyperparameters in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/RANDOMForrest_model_fuzzy.ipynb">
+                                                                                Further exploration in Jupyter notebook: <a href="https://github.com/gvo34/energy-solar/blob/master/static/notebooks/model/RANDOMForrest_model_fuzzy.ipynb">
                                                                                         RANDOMForrest_model_fuzzy
                                                                                 </a>
                         
-                                                                                </p>
-                                                                        </ul>
-                                                
-                                                
-                                                
+                                                                        </p>
+                                                        </ul>
                                                 </ul>
+                                                                
+                                                                
+                                                        
 
                                         </div>
                                                 
