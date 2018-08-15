@@ -65,84 +65,96 @@
           <div class=jumbotron>
                 <h5><span class="category" style="color: #2e925b;">Time Serie Exploration</span></h5>
                 <br>
-                <p> We explored the correlation of our solar engery consumption to determine the relationship between the observation and its historic values over time.</p>
-                <p>This provided a threshold for selecting more relevant lag values for prediction.</p>
+
+                <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+                                                        <script type="text/javascript" src="static/js/plotlyjs-bundle.js"></script>
+            
+            
+                                                        <script type="text/javascript" src="static/js/figure_solardataset.js"></script>
+                
+                                                        <div class="row">
+                                                       <div class="container">
+                                                        <div class="col-md-12"> 
+                                                                        <div id="2411a738-b526-430b-a876-ad2dcf0b33f6" style="width: 100%; height: 100%;" class="plotly-graph-div"></div>
+                                                                        <script type="text/javascript">
+                                                                            (function(){
+                                                                                window.PLOTLYENV={'BASE_URL': 'https://plot.ly'};
+                                                                
+                                                                                var gd = document.getElementById('2411a738-b526-430b-a876-ad2dcf0b33f6')
+                                                                                var resizeDebounce = null;
+                                                                
+                                                                                function resizePlot() {
+                                                                                    var bb = gd.getBoundingClientRect();
+                                                                                    Plotly.relayout(gd, {
+                                                                                        width: bb.width,
+                                                                                        height: bb.height
+                                                                                    });
+                                                                                }
+                                                                
+                                                                                
+                                                                                window.addEventListener('resize', function() {
+                                                                                    if (resizeDebounce) {
+                                                                                        window.clearTimeout(resizeDebounce);
+                                                                                    }
+                                                                                    resizeDebounce = window.setTimeout(resizePlot, 100);
+                                                                                });
+                                                                                
+                                                                
+                                                                                
+                                                                                Plotly.plot(gd,  {
+                                                                                    data: figure.data,
+                                                                                    layout: figure.layout,
+                                                                                    frames: figure.frames,
+                                                                                    config: {"mapboxAccessToken": "pk.eyJ1IjoiY2hyaWRkeXAiLCJhIjoiY2lxMnVvdm5iMDA4dnhsbTQ5aHJzcGs0MyJ9.X9o_rzNLNesDxdra4neC_A", "linkText": "Export to plot.ly", "showLink": true}
+                                                                                });
+                                                                                
+                                                                           }());
+                                                                        </script>
+                                                                        </div>             
+                                                        </div>
+                                                        </div>
+                        <p class="category">The dataset is a time serie of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
+                        <p class="category">The units are in trillion BTU and there are 351 observations.</p>
+                                        </div>
+                                </div>
+                        </div>
+                <br>
+
+
+
+
+                <p class="category">Since 2008, hundreds of thousands of solar panels have popped up across the country as an increasing number of Americans choose to power their daily lives with the sun’s energy. 
+                The Solar Energy Technologies Office invests in innovative research efforts to lower solar electricity costs every year.</p>
+                <p> We explored the correlation of our solar engery consumption to determine the relationship between the observation and its historic values over time, providing a threshold for selecting more relevant lag values for prediction.</p>
 
            </div>
            <div class="row">
                 <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Time serie</a>
-                                <a class="nav-link" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Decomposition</a>
-                                <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two" role="tab" aria-controls="v-pills-two" aria-selected="false">Lag Plot</a>
-                                <a class="nav-link" id="v-pills-three-tab" data-toggle="pill" href="#v-pills-three" role="tab" aria-controls="v-pills-three" aria-selected="false">Autocorrelation</a>
-                        </div>
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                <a class="nav-link active" id="v-pills-four-tab" data-toggle="pill" href="#v-pills-four" role="tab" aria-controls="v-pills-four" aria-selected="false">Decomposition</a>
+                                                <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two" role="tab" aria-controls="v-pills-two" aria-selected="false">Lag Plot</a>
+                                                <a class="nav-link" id="v-pills-three-tab" data-toggle="pill" href="#v-pills-three" role="tab" aria-controls="v-pills-three" aria-selected="false">Autocorrelation</a>
+                                                 <a class="nav-link" id="v-pills-one-tab" data-toggle="pill" href="#v-pills-one" role="tab" aria-controls="v-pills-one" aria-selected="true">Autocorrelation with lag</a>
+                                </div>
                 </div>
                 <div class="col-9">
                         <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
-
-                                        <script type="text/javascript" src="static/js/plotlyjs-bundle.js"></script>
-            
-            
-                                        <script type="text/javascript" src="static/js/figure_solardataset.js"></script>
-
-                                        <div class="row">
-                                       <div class="container">
-                                        <div class="col-md-12"> 
-                                                        <div id="2411a738-b526-430b-a876-ad2dcf0b33f6" style="width: 100%; height: 100%;" class="plotly-graph-div"></div>
-                                                        <script type="text/javascript">
-                                                            (function(){
-                                                                window.PLOTLYENV={'BASE_URL': 'https://plot.ly'};
+                               
+                                <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
+                                                <img src="{{ url_for('static', filename='images/Decomposetimeserie.png') }}" alt="Decomposition">
+                                                <p class="category">We aplied a multiplicative <i>seasonal_decompose()</i> function from the statsmodels library to best capture each component of the Residential Solar Energy Consumption.</p>
+                                                <p class="category">Time series decomposition involves thinking of a series as a combination of 
+                                                        <ul>
+                                                        <li>LEVEL: <i>The average value in the series</i>, </li>
+                                                        <li>TREND: <i>The increasing or decreasing value in the series</i>,</li> 
+                                                        <li>SEASONALITY: <i>The repeating short-term cycle in the series</i>, </li>
+                                                        <li>NOISE: <i>The random variation in the series</i>.</li>
+                                                        </ul>
+                                                </p>
                                                 
-                                                                var gd = document.getElementById('2411a738-b526-430b-a876-ad2dcf0b33f6')
-                                                                var resizeDebounce = null;
-                                                
-                                                                function resizePlot() {
-                                                                    var bb = gd.getBoundingClientRect();
-                                                                    Plotly.relayout(gd, {
-                                                                        width: bb.width,
-                                                                        height: bb.height
-                                                                    });
-                                                                }
-                                                
-                                                                
-                                                                window.addEventListener('resize', function() {
-                                                                    if (resizeDebounce) {
-                                                                        window.clearTimeout(resizeDebounce);
-                                                                    }
-                                                                    resizeDebounce = window.setTimeout(resizePlot, 100);
-                                                                });
-                                                                
-                                                
-                                                                
-                                                                Plotly.plot(gd,  {
-                                                                    data: figure.data,
-                                                                    layout: figure.layout,
-                                                                    frames: figure.frames,
-                                                                    config: {"mapboxAccessToken": "pk.eyJ1IjoiY2hyaWRkeXAiLCJhIjoiY2lxMnVvdm5iMDA4dnhsbTQ5aHJzcGs0MyJ9.X9o_rzNLNesDxdra4neC_A", "linkText": "Export to plot.ly", "showLink": true}
-                                                                });
-                                                                
-                                                           }());
-                                                        </script>
-                                                        </div>             
                                         </div>
-                                        </div>
-
-                                        <p class="category">The dataset is a time series of the Solar Energy Consumption by the residential sector from January 1989 to March 2018.</p>
-                                        <p class="category">The units are in trillion BTU and there are 351 observations.</p>
-                                        <p class="category">Since 2008, hundreds of thousands of solar panels have popped up across the country as an increasing number of Americans choose to power their daily lives with the sun’s energy. 
-                                        The Solar Energy Technologies Office invests in innovative research efforts to lower solar electricity costs every year.</p>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab">
-                                        <img src="{{ url_for('static', filename='images/Decomposetimeserie.png') }}" alt="Decomposition">
-                                        <p class="category">We aplied a multiplicative <i>seasonal_decompose()</i> function from the statsmodels library to best capture each component of the Residential Solar Energy Consumption.</p>
-                                        <p class="category">Time series decomposition involves thinking of a series as a combination of LEVEL: <i>The average value in the series</i>, 
-                                                TREND: <i>The increasing or decreasing value in the series</i>, SEASONALITY: <i>The repeating short-term cycle in the series</i>, 
-                                                and NOISE: <i>The random variation in the series</i>.</p>
-                                       
-
-                                </div>
                                 <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
                                                 <img src="{{ url_for('static', filename='images/lag_plot.png') }}" alt="">
                                                 <p class="category">To check the existence of autocorrelation in our time series dataset, 
@@ -152,14 +164,20 @@
                                                 that revealed a strong positive correlation (0.96) between the observation and the lag=1 value.</p>
                                         </div>
                                         
-                                <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
-                                        <img src="{{ url_for('static', filename='images/timeseriesautocorrelation.png') }}" alt="">
-                                        <p class="category">We plot the correlation coefficient for each lag variable, which shows the relationship between the observation and its historic values over time.
-                                        The plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
-                                        The plot also includes solid and dashed lines that indicate the 95% and 99% confidence intervals for the correlation values. 
-                                        Correlation values above these lines are more significant than those below the line.</p>
-
-                                </div>
+                                        <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab">
+                                                        <img src="{{ url_for('static', filename='images/autocorr.png') }}" alt="">
+                                                        <p class="category">We plot the correlation coefficient for each lag variable, which shows the relationship between the observation and its historic values over time.
+                                                        The plot includes solid and dashed lines that indicate the 95% and 99% confidence intervals for the correlation values. 
+                                                        Correlation values above these lines are more significant than those below the line.</p>
+                
+                                                </div>
+                                        <div class="tab-pane fade" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab">
+                                                <img src="{{ url_for('static', filename='images/acf.png') }}" alt="">
+                                                <p class="category">A different view of the correlation coefficient for each lag variable shown over a period of 12 observations.
+                                                                This plot provides the lag number along the x-axis and the correlation coefficient value between -1 and 1 on the y-axis. 
+                                                                </p>
+                                        </div>
+                                                
                                 
                         </div>
                 </div>
