@@ -20,11 +20,14 @@ var figure = {
         "showlegend": true, 
         "breakpoints": [], 
         "xaxis": {
+            "title": "AR prediction - MSE: 0.041 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LR prediction - MSE: 0.100 r2: 0.95 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MLP prediction - MSE: 0.459 r2: 0.76 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RF prediction - MSE: 0.021 r2: 0.99", 
             "range": [
                 0, 
                 11
             ], 
-            "title": "<br>", 
+            "titlefont": {
+                "size": 10
+            }, 
             "type": "category", 
             "autorange": true, 
             "rangeslider": {
