@@ -6,7 +6,7 @@ itsdangerous==0.24
 Jinja2==2.10.1
 MarkupSafe==1.0
 Werkzeug==0.15.3
-Pillow==4.2.1
+Pillow==9.0.1
 numpy==1.13.1
 h5py==2.7.0
 tensorflow==1.13.0
