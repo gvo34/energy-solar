@@ -9,7 +9,7 @@ Werkzeug==0.15.3
 Pillow==4.2.1
 numpy==1.13.1
 h5py==2.7.0
-tensorflow==1.13.0
+tensorflow==2.9.3
 Keras==2.0.6
 pandas==0.20.3
 matplotlib==2.1.0
